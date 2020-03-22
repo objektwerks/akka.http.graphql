@@ -1,0 +1,13 @@
+.bloop
+.idea
+.metals
+js/target/
+jvm/target/
+project/metals.sbt
+project/project/
+project/target/
+shared/.js
+shared/.jvm
+sw/target/
+target/
+.DS_Store
