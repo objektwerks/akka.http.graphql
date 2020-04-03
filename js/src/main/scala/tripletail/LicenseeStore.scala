@@ -90,10 +90,10 @@ class LicenseeStore {
         } else console.log("cacheLicensee: no Licensee in db", event)
       }
     }
-    copyLicenseeCache
+    getCachedLicensee
   }
 
-  private def copyLicenseeCache: Option[Licensee] = if (licenseeCache.nonEmpty) Some(licenseeCache.get) else None
+  private def getCachedLicensee: Option[Licensee] = if (licenseeCache.nonEmpty) Some(licenseeCache.get) else None
 
   def getLicensee: Future[Option[Licensee]] = cacheLicensee()
 
@@ -114,6 +114,6 @@ class LicenseeStore {
                                console.log(s"putLicensee.onsuccess : $licenseeCache", event)
                              }
                            }
-    } yield copyLicenseeCache
+    } yield getCachedLicensee
   }
 }
