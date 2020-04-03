@@ -17,12 +17,6 @@ import scala.concurrent.duration._
 import scala.language.postfixOps
 
 class IntegrationTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
-  import de.heikoseeberger.akkahttpupickle.UpickleSupport._
-  import Serializers._
-  import DateTime._
-  import StatusCodes._
-  import Validators._
-
   val logger = LoggerFactory.getLogger(getClass)
   val conf = ConfigFactory.load("test.server.conf")
   implicit val actorRefFactory = ActorSystem.create(conf.getString("server.name"), conf.getConfig("akka"))
@@ -40,6 +34,12 @@ class IntegrationTest extends AnyWordSpec with Matchers with ScalatestRouteTest 
     .map { server =>
       logger.info(s"*** Server integration test host: ${server.localAddress.toString}")
     }
+
+  import de.heikoseeberger.akkahttpupickle.UpickleSupport._
+  import Serializers._
+  import DateTime._
+  import StatusCodes._
+  import Validators._
 
   val url = router.url
   var licensee: Licensee = _
