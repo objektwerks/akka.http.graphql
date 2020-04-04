@@ -1,7 +1,5 @@
 import sbt.Keys._
 
-jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
-
 name := "tripletail"
 
 val akkaVersion = "2.6.4"
@@ -32,6 +30,7 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .settings(
     libraryDependencies ++= Seq(
       "com.lihaoyi" %% "upickle" % upickleVersion,
+      "org.scala-js" %% "scalajs-env-jsdom-nodejs" % "1.0.0" % Test,
       "org.scalatest" %% "scalatest" % scalaTestVersion % Test
     )
   )
@@ -46,7 +45,8 @@ lazy val js = (project in file("js"))
       "io.github.cquiroz" %%% "scala-java-time" % "2.0.0-RC5",
       "com.lihaoyi" %%% "utest" % "0.7.4" % Test
     ),
-    testFrameworks += new TestFramework("utest.runner.Framework")
+    testFrameworks += new TestFramework("utest.runner.Framework"),
+    jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
   ) dependsOn shared.js
 
 lazy val sw = (project in file("sw"))

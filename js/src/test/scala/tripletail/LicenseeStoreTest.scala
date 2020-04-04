@@ -1,18 +1,11 @@
 package tripletail
 
-import org.scalajs.dom
-import org.scalajs.dom.console
-
-import scala.concurrent.ExecutionContext.Implicits.global
-
 import utest._
 
 object LicenseeStoreTest extends TestSuite {
   def tests = Tests {
+    import scala.concurrent.ExecutionContext.Implicits.global
     test("licensee store") {
-      val window = dom.window
-      console.info(window.name)
-
       val store = LicenseeStore()
       val licensee = Licensee(emailAddress = "tripletailwerks@gmail.com")
       for {
