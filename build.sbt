@@ -1,5 +1,7 @@
 import sbt.Keys._
 
+jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
+
 name := "tripletail"
 
 val akkaVersion = "2.6.4"
