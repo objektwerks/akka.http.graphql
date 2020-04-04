@@ -44,8 +44,9 @@ lazy val js = (project in file("js"))
       "com.raquo" %%% "laminar" % "0.8.0",
       "com.lihaoyi" %%% "upickle" % upickleVersion,
       "io.github.cquiroz" %%% "scala-java-time" % "2.0.0-RC5",
-      "org.scalatest" %%% "scalatest" % scalaTestVersion % Test
-    )
+      "com.lihaoyi" %%% "utest" % "0.7.4" % Test
+    ),
+    testFrameworks += new TestFramework("utest.runner.Framework")
   ) dependsOn shared.js
 
 lazy val sw = (project in file("sw"))
