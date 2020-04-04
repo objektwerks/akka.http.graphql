@@ -17,7 +17,7 @@ import scala.scalajs.js
 import scala.util.{Failure, Success}
 
 @js.native
-trait LicenseeRecord extends js.Object {
+trait LicenseeRecord extends js.Any {
   val key: Int
   val cryptoKey: CryptoKey
   val encryptedLicensee: BufferSource
