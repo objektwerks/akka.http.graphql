@@ -1,4 +1,4 @@
-import sbt.Keys._
+import sbt.Keys.{testFrameworks, _}
 
 name := "tripletail"
 
@@ -45,8 +45,8 @@ lazy val js = (project in file("js"))
       "io.github.cquiroz" %%% "scala-java-time" % "2.0.0-RC5",
       "com.lihaoyi" %%% "utest" % "0.7.4" % Test
     ),
-    testFrameworks += new TestFramework("utest.runner.Framework"),
-    jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
+    jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
+    testFrameworks += new TestFramework("utest.runner.Framework")
   ) dependsOn shared.js
 
 lazy val sw = (project in file("sw"))
