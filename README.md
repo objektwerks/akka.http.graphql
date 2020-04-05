@@ -15,6 +15,13 @@ Dev
 * View js-fastopt.js or js-fullOptJS.js in js/target. View sharedjs-fastopt.js or sharedjs-fullOptJS.js in shared/target.
 * For step 5, see the build.sbt > mainClass in reStart := Some("pool.Server")
 
+jsEnv
+-----
+1. NodeJs - Window not supported
+2. NodeJs and Jsdom - Window supported. IndexedDB not supported. And other Windos libraries likely not supported.
+3. PhantomJS - ?
+4. Selenium - ?
+
 Test
 ----
 1. sbt clean sharedJVM/test
