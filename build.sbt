@@ -44,8 +44,10 @@ lazy val js = (project in file("js"))
       "io.github.cquiroz" %%% "scala-java-time" % "2.0.0-RC5",
       "com.lihaoyi" %%% "utest" % "0.7.4" % Test
     ),
-    jsEnv in Test := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
     testFrameworks += new TestFramework("utest.runner.Framework")
+  )
+  .settings(
+    jsEnv in Test := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
   ) dependsOn shared.js
 
 lazy val sw = (project in file("sw"))

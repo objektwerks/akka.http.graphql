@@ -43,6 +43,8 @@ class LicenseeStore {
   private val licenseeKey = 1
   private var licenseeCache: Option[Licensee] = None
 
+  console.log(s"Window: $window")
+  console.log(s"IDBFactory: ${window.indexedDB}")
   private val openDBRequest = window.indexedDB.open(dbName, dbVersion)
 
   openDBRequest.onupgradeneeded = (event: IDBVersionChangeEvent) => {
