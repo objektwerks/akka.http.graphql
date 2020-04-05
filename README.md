@@ -19,7 +19,7 @@ jsEnv
 -----
 1. NodeJs - Window not supported
 2. NodeJs and Jsdom - Window supported. IndexedDB not supported. And other Windos libraries likely not supported.
-3. PhantomJS - ?
+3. PhantomJS - Throws exception. Advanced configuration no available.
 4. Selenium - ?
 
 Test
