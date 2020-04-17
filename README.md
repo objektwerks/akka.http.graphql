@@ -50,10 +50,8 @@ Run
 
 Package and Run
 ---------------
->This is a work-in-progress!
-1. sbt clean compile universal:packageZipTarball
-2. unzip ./target/universal/tripletail-0.1-SNAPSHOT.tgz
-3. ./target/universal/tripletail-0.1-SNAPSHOT/bin/tripletail
+1. sbt clean compile stage
+2. ./target/universal/stage/bin/tripletail
 
 Panes
 -----

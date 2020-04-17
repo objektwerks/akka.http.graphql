@@ -1,7 +1,5 @@
 import sbt.Keys.{testFrameworks, _}
 
-enablePlugins(UniversalPlugin)
-
 name := "tripletail"
 
 val akkaVersion = "2.6.4"
@@ -22,9 +20,11 @@ lazy val tripletail = project.in(file("."))
   .aggregate(shared.js, shared.jvm, js, sw, jvm)
   .settings(commonSettings)
   .settings(
-    mainClass in Compile := Some("tripletail.Server")
+    maintainer := "tripletailwerks@gmail.com",
+    mainClass in Compile := Some("tripletail.Server"),
+    jlinkIgnoreMissingDependency := JlinkIgnore.everything
   )
-  .enablePlugins(JavaAppPackaging)
+  .enablePlugins(JlinkPlugin)
   .dependsOn(shared.js, shared.jvm, js, sw, jvm)
 
 lazy val shared = crossProject(JSPlatform, JVMPlatform)
