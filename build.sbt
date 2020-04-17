@@ -1,5 +1,7 @@
 import sbt.Keys.{testFrameworks, _}
 
+enablePlugins(UniversalPlugin)
+
 name := "tripletail"
 
 val akkaVersion = "2.6.4"
@@ -20,9 +22,10 @@ lazy val tripletail = project.in(file("."))
   .aggregate(shared.js, shared.jvm, js, sw, jvm)
   .settings(commonSettings)
   .settings(
-    publish := {},
-    publishLocal := {}
+    mainClass in Compile := Some("tripletail.Server")
   )
+  .enablePlugins(JavaAppPackaging)
+  .dependsOn(shared.js, shared.jvm, js, sw, jvm)
 
 lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .crossType(CrossType.Pure)
@@ -83,7 +86,7 @@ lazy val jvm = (project in file("jvm"))
       "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % IntegrationTest,
       "org.scalatest" %% "scalatest" % scalaTestVersion % IntegrationTest
     ),
-    scalacOptions += "-Ywarn-macros:after",
+    scalacOptions ++= Seq("-Ywarn-macros:after"),
     javaOptions in IntegrationTest += "-Dquill.binds.log=true",
     (resources in Compile) += (fastOptJS in (shared.js, Compile)).value.data,
     (resources in Compile) += (fastOptJS in (js, Compile)).value.data,

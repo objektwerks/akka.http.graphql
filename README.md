@@ -48,6 +48,13 @@ Run
 2. open index.html and click target browser in right top corner
 3. open developer tools in target brower; select console tab
 
+Package and Run
+---------------
+>This is a work-in-progress!
+1. sbt clean compile universal:packageZipTarball
+2. unzip ./target/universal/tripletail-0.1-SNAPSHOT.tgz
+3. ./target/universal/tripletail-0.1-SNAPSHOT/bin/tripletail
+
 Panes
 -----
 >All panes, less Account panes, will include list, add and update features.
