@@ -22,6 +22,9 @@ lazy val tripletail = project.in(file("."))
   .settings(
     maintainer := "tripletailwerks@gmail.com",
     mainClass in Compile := Some("tripletail.Server"),
+    jlinkModules := {
+      jlinkModules.value :+ "jdk.unsupported"
+    },
     jlinkIgnoreMissingDependency := JlinkIgnore.everything
   )
   .enablePlugins(JlinkPlugin)
