@@ -17,8 +17,6 @@ object Router {
 }
 
 class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
-  import de.heikoseeberger.akkahttpupickle.UpickleSupport._
-  import Serializers._
   import Validators._
   import StatusCodes._
   import licenseeCache._

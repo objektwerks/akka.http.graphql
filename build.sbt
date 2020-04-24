@@ -6,7 +6,7 @@ libraryDependencies ++= {
   val akkaVersion = "2.6.4"
   val akkkHttpVersion = "10.1.11"
   val quillVersion = "3.5.1"
-  val upickleVersion = "1.0.0"
+  val circeVersion = "0.11.1"
   val scalaTestVersion = "3.1.1"
   Seq(
     "com.typesafe.akka" %% "akka-actor" % akkaVersion,
@@ -14,10 +14,11 @@ libraryDependencies ++= {
     "com.typesafe.akka" %% "akka-stream" % akkaVersion,
     "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
     "com.typesafe.akka" %% "akka-agent" % "2.5.31",
-    "de.heikoseeberger" %% "akka-http-upickle" % "1.32.0",
+    "de.heikoseeberger" %% "akka-http-circe" % "1.32.0",
     "io.getquill" %% "quill-sql" % quillVersion,
     "io.getquill" %% "quill-async-postgres" % quillVersion,
-    "com.lihaoyi" %% "upickle" % upickleVersion,
+    "io.circe" %% "circe-parser" % circeVersion,
+    "io.circe" %% "circe-generic" % circeVersion,
     "com.github.cb372" %% "scalacache-caffeine" % "0.28.0",
     "org.jodd" % "jodd-mail" % "5.1.4",
     "com.typesafe" % "config" % "1.4.0",
