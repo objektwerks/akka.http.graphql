@@ -2,7 +2,6 @@ name := "tripletail"
 organization := "objektwerks"
 version := "0.1-SNAPSHOT"
 scalaVersion := "2.12.11"
-useCoursier := false
 libraryDependencies ++= {
   val akkaVersion = "2.6.4"
   val akkkHttpVersion = "10.1.11"
@@ -15,7 +14,7 @@ libraryDependencies ++= {
     "com.typesafe.akka" %% "akka-stream" % akkaVersion,
     "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
     "com.typesafe.akka" %% "akka-agent" % "2.5.31",
-    "de.heikoseeberger" %% "akka-http-upickle" % "1.30.0",
+    "de.heikoseeberger" %% "akka-http-upickle" % "1.32.0",
     "io.getquill" %% "quill-sql" % quillVersion,
     "io.getquill" %% "quill-async-postgres" % quillVersion,
     "com.lihaoyi" %% "upickle" % upickleVersion,
