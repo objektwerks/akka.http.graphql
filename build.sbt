@@ -16,6 +16,7 @@ lazy val shared = (project in file("shared"))
   )
 
 lazy val server = (project in file("server"))
+  .aggregate(shared)
   .settings(common)
   .settings(
     libraryDependencies ++= {
