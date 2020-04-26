@@ -33,8 +33,11 @@ class RouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest {
       logger.info(s"*** Server integration test host: ${server.localAddress.toString}")
     }
 
+  import de.heikoseeberger.akkahttpupickle.{UpickleSupport => Upickle}
+  import Upickle._
   import DateTime._
   import StatusCodes._
+  import Serializers._
   import Validators._
 
   val url = router.url
