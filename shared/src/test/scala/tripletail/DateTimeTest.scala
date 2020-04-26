@@ -4,7 +4,7 @@ import java.time.{LocalDate, LocalTime}
 
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
-import pool.DateTime._
+import tripletail.DateTime._
 
 class DateTimeTest extends AnyFunSuite with Matchers {
   test("low date") {
