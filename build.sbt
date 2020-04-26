@@ -10,8 +10,8 @@ lazy val shared = (project in file("shared"))
   .settings(common)
   .settings(
     libraryDependencies ++= Seq(
-      "com.lihaoyi" %% "upickle" % upickleVersion,
-      "org.scalatest" %% "scalatest" % scalaTestVersion % Test
+      "com.lihaoyi" %% "upickle" % "1.0.0",
+      "org.scalatest" %% "scalatest" % "3.1.1" % Test
     )
   )
 
@@ -22,7 +22,6 @@ lazy val server = (project in file("server"))
       val akkaVersion = "2.6.4"
       val akkkHttpVersion = "10.1.11"
       val quillVersion = "3.5.1"
-      val scalaTestVersion = "3.1.1"
       Seq(
         "com.typesafe.akka" %% "akka-actor" % akkaVersion,
         "com.typesafe.akka" %% "akka-http" % akkkHttpVersion,
@@ -38,7 +37,7 @@ lazy val server = (project in file("server"))
         "ch.qos.logback" % "logback-classic" % "1.2.3",
         "com.typesafe.akka" %% "akka-http-testkit" % akkkHttpVersion % Test,
         "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test,
-        "org.scalatest" %% "scalatest" % scalaTestVersion % Test
+        "org.scalatest" %% "scalatest" % "3.1.1" % Test
       )
     },
     scalacOptions ++= Seq("-Ywarn-macros:after"),
