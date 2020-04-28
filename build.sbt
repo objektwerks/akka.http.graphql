@@ -6,6 +6,14 @@ lazy val common = Defaults.coreDefaultSettings ++ Seq(
   scalaVersion := "2.12.11"
 )
 
+lazy val tripletail = project.in(file("."))
+  .aggregate(shared, client, server)
+  .settings(common)
+  .settings(
+    publish := {},
+    publishLocal := {}
+  )
+
 lazy val shared = (project in file("shared"))
   .settings(common)
   .settings(
@@ -15,8 +23,14 @@ lazy val shared = (project in file("shared"))
     )
   )
 
+lazy val client = (project in file("client"))
+  .aggregate(shared)
+  .dependsOn(shared)
+  .settings(common)
+
 lazy val server = (project in file("server"))
   .aggregate(shared)
+  .dependsOn(shared)
   .settings(common)
   .settings(
     libraryDependencies ++= {
@@ -43,4 +57,4 @@ lazy val server = (project in file("server"))
     },
     scalacOptions ++= Seq("-Ywarn-macros:after"),
     javaOptions in IntegrationTest += "-Dquill.binds.log=true"
-  ).dependsOn(shared)
+  )
