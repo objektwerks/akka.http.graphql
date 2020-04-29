@@ -27,6 +27,16 @@ lazy val client = (project in file("client"))
   .aggregate(shared)
   .dependsOn(shared)
   .settings(common)
+  .settings(
+    libraryDependencies ++= {
+      val openjfxVersion = "14"
+      Seq(
+        "org.scalafx" %% "scalafx" % "12.0.2-R18",
+        "org.openjfx" % "javafx-controls" % openjfxVersion,
+        "org.openjfx" % "javafx-media" % openjfxVersion
+      )
+    }
+  )
 
 lazy val server = (project in file("server"))
   .aggregate(shared)
