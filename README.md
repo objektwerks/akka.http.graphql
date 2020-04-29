@@ -1,66 +1,50 @@
 Tripletail
 ----------
->Pool maintenance ( prototype ) application.
+>Pool maintenance application.
 
 Dev
 ---
+>Server:
 1. sbt
 2. clean
 3. compile
-4. project jvm
+4. project server
 5. ~reStart
-6. open browser to http://127.0.0.1:7979
-7. open developer tools
-
-* View js-fastopt.js or js-fullOptJS.js in js/target. View sharedjs-fastopt.js or sharedjs-fullOptJS.js in shared/target.
-* For step 5, see the build.sbt > mainClass in reStart := Some("pool.Server")
-
-jsEnv
------
-1. NodeJs - Window not supported
-2. NodeJs and Jsdom - Window supported. IndexedDB not supported. And other Windos libraries likely not supported.
-3. PhantomJS - Throws exception. Advanced configuration no available.
-4. Selenium - Doesn't support headless.
+>Client:
+1. sbt
+2. clean
+3. compile
+4. ~reStart
 
 Test
 ----
-1. sbt clean sharedJVM/test
-2. sbt clean jvm/it:test  // Requires valid email address at this time in jvm/src/it/resources/test.server.conf.
-3. sbt clean js/test
+1. sbt clean shared/test
+2. sbt clean server/test
+3. sbt clean client/test
 
 Bloop
 -----
 1. sbt bloopInstall
 2. bloop clean tripletail
 3. bloop compile tripletail
-4. bloop test sharedJVM
-5. bloop test jvm-it
-6. bloop test js
-
-Build
------
-1. sbt clean compile package
+4. bloop test shared
+5. bloop test server
+6. bloop test client
 
 Run
 ---
-1. sbt jvm/run | sbt ~reStart
-2. open index.html and click target browser in right top corner
-3. open developer tools in target brower; select console tab
+1. sbt server/run
+2. sbt client/run
 
 Package and Run
 ---------------
->This process sort of works, but is totally broken in step 4.
-1. sbt clean universal:packageBin | sbt clean universal:packageZipTarball
-2. unzip ./jvm/target/universal/jvm-0.1-SNAPSHOT.zip
-2. ./jvm/target/universal/jvm-0.1-SNAPSHOT/bin/jvm
-3. open browser to http://127.0.0.1:7979
-
-The ScalaJS Bundling Nightmare
-------------------------------
->Research the following:
-1. ScalaJS Bundler: https://scalacenter.github.io/scalajs-bundler/index.html
-2. Sbt Web: https://github.com/sbt/sbt-web
-3. Sbt Web ScalaJS: https://github.com/vmunier/sbt-web-scalajs
+>Fails with java.lang.NoClassDefFoundError: sun/misc/Unsafe due to Akka!
+>Adding the **jdk.unsupported** module resolves the issue.
+1. sbt shared/stage
+2. sbt server/stage
+3. sbt client/stage
+4. ./target/universal/stage/bin/server
+5. ./target/universal/stage/bin/client
 
 Panes
 -----

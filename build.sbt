@@ -1,5 +1,7 @@
 name := "tripletail"
 
+useCoursier := false
+
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
   version := "0.1-SNAPSHOT",
@@ -15,17 +17,23 @@ lazy val tripletail = project.in(file("."))
   )
 
 lazy val shared = (project in file("shared"))
+  .enablePlugins(JlinkPlugin)
   .settings(common)
   .settings(
     libraryDependencies ++= Seq(
       "com.lihaoyi" %% "upickle" % "1.0.0",
       "org.scalatest" %% "scalatest" % "3.1.1" % Test
-    )
+    ),
+    jlinkModules := {
+      jlinkModules.value :+ "jdk.unsupported"
+    },
+    jlinkIgnoreMissingDependency := JlinkIgnore.everything
   )
 
 lazy val client = (project in file("client"))
   .aggregate(shared)
   .dependsOn(shared)
+  .enablePlugins(JlinkPlugin)
   .settings(common)
   .settings(
     libraryDependencies ++= {
@@ -35,14 +43,20 @@ lazy val client = (project in file("client"))
         "org.openjfx" % "javafx-controls" % openjfxVersion,
         "org.openjfx" % "javafx-media" % openjfxVersion
       )
-    }
+    },
+    jlinkModules := {
+      jlinkModules.value :+ "jdk.unsupported"
+    },
+    jlinkIgnoreMissingDependency := JlinkIgnore.everything
   )
 
 lazy val server = (project in file("server"))
   .aggregate(shared)
   .dependsOn(shared)
+  .enablePlugins(JlinkPlugin)
   .settings(common)
   .settings(
+    mainClass := Some("tripletail.Server"),
     libraryDependencies ++= {
       val akkaVersion = "2.6.4"
       val akkkHttpVersion = "10.1.11"
@@ -52,7 +66,6 @@ lazy val server = (project in file("server"))
         "com.typesafe.akka" %% "akka-http" % akkkHttpVersion,
         "com.typesafe.akka" %% "akka-stream" % akkaVersion,
         "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
-        "com.typesafe.akka" %% "akka-agent" % "2.5.31",
         "de.heikoseeberger" %% "akka-http-upickle" % "1.32.0",
         "io.getquill" %% "quill-sql" % quillVersion,
         "io.getquill" %% "quill-async-postgres" % quillVersion,
@@ -66,5 +79,9 @@ lazy val server = (project in file("server"))
       )
     },
     scalacOptions ++= Seq("-Ywarn-macros:after"),
-    javaOptions in IntegrationTest += "-Dquill.binds.log=true"
+    javaOptions in IntegrationTest += "-Dquill.binds.log=true",
+    jlinkModules := {
+      jlinkModules.value :+ "jdk.unsupported"
+    },
+    jlinkIgnoreMissingDependency := JlinkIgnore.everything
   )
