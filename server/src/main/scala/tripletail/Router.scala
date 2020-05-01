@@ -47,12 +47,6 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
       }
   }
 
-  val index = path("") {
-    getFromResource("index.html")
-  }
-  val resources = get {
-    getFromResourceDirectory("./")
-  }
   val signup = path("signup") {
     post {
       entity(as[SignUp]) { signup =>
@@ -399,5 +393,4 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
     }
   }
   val secureApi = secure { api }
-  val routes = Route.seal( index ~ resources ~ signup ~ activatelicensee ~ secureApi )
-}
+  val routes = Route.seal( signup ~ activatelicensee ~ secureApi )

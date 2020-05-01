@@ -1,7 +1,5 @@
 name := "tripletail"
 
-useCoursier := false
-
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
   version := "0.1-SNAPSHOT",
@@ -20,6 +18,7 @@ lazy val shared = (project in file("shared"))
   .enablePlugins(JlinkPlugin)
   .settings(common)
   .settings(
+    useCoursier := false,
     libraryDependencies ++= Seq(
       "com.lihaoyi" %% "upickle" % "1.0.0",
       "org.scalatest" %% "scalatest" % "3.1.1" % Test
@@ -36,6 +35,7 @@ lazy val client = (project in file("client"))
   .enablePlugins(JlinkPlugin)
   .settings(common)
   .settings(
+    useCoursier := false,
     libraryDependencies ++= {
       val openjfxVersion = "14"
       Seq(
@@ -57,6 +57,7 @@ lazy val server = (project in file("server"))
   .settings(common)
   .settings(
     mainClass := Some("tripletail.Server"),
+    useCoursier := false,
     libraryDependencies ++= {
       val akkaVersion = "2.6.4"
       val akkkHttpVersion = "10.1.11"
