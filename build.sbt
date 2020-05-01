@@ -18,9 +18,8 @@ lazy val shared = (project in file("shared"))
   .enablePlugins(JlinkPlugin)
   .settings(common)
   .settings(
-    useCoursier := false,
     libraryDependencies ++= Seq(
-      "com.lihaoyi" %% "upickle" % "1.0.0",
+      "com.lihaoyi" %% "upickle" % "1.1.0",
       "org.scalatest" %% "scalatest" % "3.1.1" % Test
     ),
     jlinkModules := {
@@ -35,7 +34,6 @@ lazy val client = (project in file("client"))
   .enablePlugins(JlinkPlugin)
   .settings(common)
   .settings(
-    useCoursier := false,
     libraryDependencies ++= {
       val openjfxVersion = "14"
       Seq(
@@ -57,7 +55,6 @@ lazy val server = (project in file("server"))
   .settings(common)
   .settings(
     mainClass := Some("tripletail.Server"),
-    useCoursier := false,
     libraryDependencies ++= {
       val akkaVersion = "2.6.4"
       val akkkHttpVersion = "10.1.11"
@@ -68,6 +65,7 @@ lazy val server = (project in file("server"))
         "com.typesafe.akka" %% "akka-stream" % akkaVersion,
         "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
         "de.heikoseeberger" %% "akka-http-upickle" % "1.32.0",
+        "com.lihaoyi" %% "upickle" % "1.1.0",
         "io.getquill" %% "quill-sql" % quillVersion,
         "io.getquill" %% "quill-async-postgres" % quillVersion,
         "com.github.cb372" %% "scalacache-caffeine" % "0.28.0",

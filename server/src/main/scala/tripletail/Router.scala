@@ -53,7 +53,7 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
         if (signup.isValid) {
           implicit val timeout = new Timeout(10, TimeUnit.SECONDS)
           val sendEmail = SendEmail(signup.emailAddress, Licensee.generateLicense)
-          onSuccess( emailer ? sendEmail ) {
+          onSuccess(emailer ? sendEmail) {
             case Some(_) => onSuccess(signUp(sendEmail.license, signup.emailAddress)) {
               licensee => complete(OK -> SignedUp(licensee))
             }
@@ -392,5 +392,8 @@ class Router(store: Store, licenseeCache: LicenseeCache, emailer: ActorRef) {
       }
     }
   }
-  val secureApi = secure { api }
-  val routes = Route.seal( signup ~ activatelicensee ~ secureApi )
+  val secureApi = secure {
+    api
+  }
+  val routes = Route.seal(signup ~ activatelicensee ~ secureApi)
+}
