@@ -36,8 +36,8 @@ Run
 1. sbt server/run
 2. sbt client/run
 
-Package and Run
----------------
+Package
+-------
 1. sbt server/stage
 2. sbt client/stage
 
