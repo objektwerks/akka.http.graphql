@@ -1,6 +1,6 @@
 Tripletail
 ----------
->Pool maintenance application.
+>Pool maintenance app.
 
 Dev
 ---
@@ -38,13 +38,8 @@ Run
 
 Package and Run
 ---------------
->Fails with java.lang.NoClassDefFoundError: sun/misc/Unsafe due to Akka!
->Adding the **jdk.unsupported** module resolves the issue.
-1. sbt shared/stage
-2. sbt server/stage
-3. sbt client/stage
-4. ./target/universal/stage/bin/server
-5. ./target/universal/stage/bin/client
+1. sbt server/stage
+2. sbt client/stage
 
 Panes
 -----

@@ -15,49 +15,38 @@ lazy val tripletail = project.in(file("."))
   )
 
 lazy val shared = (project in file("shared"))
-  .enablePlugins(JlinkPlugin)
   .settings(common)
   .settings(
     libraryDependencies ++= Seq(
       "com.lihaoyi" %% "upickle" % "1.1.0",
-      "org.scalatest" %% "scalatest" % "3.1.1" % Test
-    ),
-    jlinkModules := {
-      jlinkModules.value :+ "jdk.unsupported"
-    },
-    jlinkIgnoreMissingDependency := JlinkIgnore.everything
+      "org.scalatest" %% "scalatest" % "3.1.2" % Test
+    )
   )
 
 lazy val client = (project in file("client"))
-  .aggregate(shared)
   .dependsOn(shared)
-  .enablePlugins(JlinkPlugin)
+  .enablePlugins(JavaAppPackaging)
   .settings(common)
   .settings(
     libraryDependencies ++= {
       val openjfxVersion = "14"
       Seq(
-        "org.scalafx" %% "scalafx" % "12.0.2-R18",
+        "org.scalafx" %% "scalafx" % "14-R19",
         "org.openjfx" % "javafx-controls" % openjfxVersion,
         "org.openjfx" % "javafx-media" % openjfxVersion
       )
-    },
-    jlinkModules := {
-      jlinkModules.value :+ "jdk.unsupported"
-    },
-    jlinkIgnoreMissingDependency := JlinkIgnore.everything
+    }
   )
 
 lazy val server = (project in file("server"))
-  .aggregate(shared)
   .dependsOn(shared)
-  .enablePlugins(JlinkPlugin)
+  .enablePlugins(JavaAppPackaging)
   .settings(common)
   .settings(
     mainClass := Some("tripletail.Server"),
     libraryDependencies ++= {
-      val akkaVersion = "2.6.4"
-      val akkkHttpVersion = "10.1.11"
+      val akkaVersion = "2.6.5"
+      val akkkHttpVersion = "10.1.12"
       val quillVersion = "3.5.1"
       Seq(
         "com.typesafe.akka" %% "akka-actor" % akkaVersion,
@@ -78,9 +67,5 @@ lazy val server = (project in file("server"))
       )
     },
     scalacOptions ++= Seq("-Ywarn-macros:after"),
-    javaOptions in IntegrationTest += "-Dquill.binds.log=true",
-    jlinkModules := {
-      jlinkModules.value :+ "jdk.unsupported"
-    },
-    jlinkIgnoreMissingDependency := JlinkIgnore.everything
+    javaOptions in IntegrationTest += "-Dquill.binds.log=true"
   )
