@@ -38,8 +38,8 @@ Run
 
 Package
 -------
-1. sbt server/stage
-2. sbt client/stage
+1. sbt server/stage | server/universal:packageZipTarball
+2. sbt client/stage | client/universal:packageZipTarball
 
 Panes
 -----

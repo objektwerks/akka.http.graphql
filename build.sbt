@@ -28,6 +28,8 @@ lazy val client = (project in file("client"))
   .enablePlugins(JlinkPlugin)
   .settings(common)
   .settings(
+    maintainer := "tripletail@runbox.com",
+    mainClass := Some("tripletail.Client"),
     libraryDependencies ++= {
       val openjfxVersion = "14"
       Seq(
@@ -47,6 +49,7 @@ lazy val server = (project in file("server"))
   .enablePlugins(JlinkPlugin)
   .settings(common)
   .settings(
+    maintainer := "tripletail@runbox.com",
     mainClass := Some("tripletail.Server"),
     libraryDependencies ++= {
       val akkaVersion = "2.6.5"
