@@ -25,7 +25,7 @@ lazy val shared = (project in file("shared"))
 
 lazy val client = (project in file("client"))
   .dependsOn(shared)
-  .enablePlugins(JavaAppPackaging)
+  .enablePlugins(JlinkPlugin)
   .settings(common)
   .settings(
     libraryDependencies ++= {
@@ -35,12 +35,16 @@ lazy val client = (project in file("client"))
         "org.openjfx" % "javafx-controls" % openjfxVersion,
         "org.openjfx" % "javafx-media" % openjfxVersion
       )
-    }
+    },
+    jlinkModules := {
+      jlinkModules.value :+ "jdk.unsupported"
+    },
+    jlinkIgnoreMissingDependency := JlinkIgnore.everything
   )
 
 lazy val server = (project in file("server"))
   .dependsOn(shared)
-  .enablePlugins(JavaAppPackaging)
+  .enablePlugins(JlinkPlugin)
   .settings(common)
   .settings(
     mainClass := Some("tripletail.Server"),
@@ -67,5 +71,9 @@ lazy val server = (project in file("server"))
       )
     },
     scalacOptions ++= Seq("-Ywarn-macros:after"),
-    javaOptions in IntegrationTest += "-Dquill.binds.log=true"
+    javaOptions in IntegrationTest += "-Dquill.binds.log=true",
+    jlinkModules := {
+      jlinkModules.value :+ "jdk.unsupported"
+    },
+    jlinkIgnoreMissingDependency := JlinkIgnore.everything
   )
