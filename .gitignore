@@ -8,6 +8,4 @@ project/metals.sbt
 project/project/
 project/target/
 target/
-src/
-tripletail.code-workspace
 .DS_Store
