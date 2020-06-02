@@ -70,5 +70,5 @@ lazy val server = (project in file("server"))
       )
     },
     scalacOptions ++= Seq("-Ywarn-macros:after"),
-    javaOptions in IntegrationTest += "-Dquill.binds.log=true"
+    javaOptions in Test += "-Dquill.binds.log=true"
   )
