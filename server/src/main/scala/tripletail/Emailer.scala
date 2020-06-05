@@ -52,7 +52,7 @@ class Emailer(conf: Config) extends Actor with ActorLogging {
     try {
       session = smtpServer.createSession
       session.open()
-      messageId = Some( session.sendMail(buildEmail(to, license)) )
+      messageId = Some( session.sendMail( buildEmail(to, license)) )
     } catch {
       case NonFatal(error) => log.error(s"*** Emailer send to: $to failed: ${error.getMessage}", error)
     } finally {
