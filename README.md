@@ -207,25 +207,25 @@ Postgresql
 Database
 --------
 1. psql postgres
-2. CREATE USER pool WITH ENCRYPTED PASSWORD 'pool';
-3. CREATE DATABASE pool OWNER pool;
-4. GRANT ALL PRIVILEGES ON DATABASE pool TO pool;
+2. CREATE USER pool WITH ENCRYPTED PASSWORD 'tripletail';
+3. CREATE DATABASE tripletail OWNER tripletail;
+4. GRANT ALL PRIVILEGES ON DATABASE tripletail TO tripletail;
 5. \l
 6. \q
-7. psql pool
+7. psql tripletail
 8. \i ddl.sql
 9. \q
 
 DDL
 ---
-1. psql pool
+1. psql tripletail
 2. \i ddl.sql
 3. \q
 
 Drop
 ----
 1. psql postgres
-2. drop database pool;
+2. drop database tripletail;
 3. \q
 
 Quill
