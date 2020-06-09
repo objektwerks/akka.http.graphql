@@ -4,6 +4,7 @@ import java.time.{LocalDate, LocalTime}
 
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
+
 import tripletail.DateTime._
 
 class DateTimeTest extends AnyFunSuite with Matchers {
