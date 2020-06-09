@@ -48,7 +48,7 @@ lazy val server = (project in file("server"))
     maintainer := "tripletail@runbox.com",
     mainClass := Some("tripletail.Server"),
     libraryDependencies ++= {
-      val akkaVersion = "2.6.5"
+      val akkaVersion = "2.6.6"
       val akkkHttpVersion = "10.1.12"
       val quillVersion = "3.5.1"
       Seq(
