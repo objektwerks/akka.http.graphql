@@ -66,7 +66,7 @@ lazy val server = (project in file("server"))
         "ch.qos.logback" % "logback-classic" % "1.2.3",
         "com.typesafe.akka" %% "akka-http-testkit" % akkkHttpVersion % Test,
         "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test,
-        "org.scalatest" %% "scalatest" % "3.1.1" % Test
+        "org.scalatest" %% "scalatest" % "3.1.2" % Test
       )
     },
     scalacOptions ++= Seq("-Ywarn-macros:after"),
