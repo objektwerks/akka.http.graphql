@@ -33,7 +33,7 @@ lazy val client = (project in file("client"))
     libraryDependencies ++= {
       val openjfxVersion = "14"
       Seq(
-        "org.scalafx" %% "scalafx" % "14-R19",
+        "org.scalafx" %% "scalafx" % "8.0.192-R14",
         "org.openjfx" % "javafx-controls" % openjfxVersion,
         "org.openjfx" % "javafx-media" % openjfxVersion
       )
