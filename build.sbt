@@ -25,7 +25,7 @@ lazy val shared = (project in file("shared"))
 
 lazy val client = (project in file("client"))
   .dependsOn(shared)
-  .enablePlugins(JDKPackagerPlugin)
+  .enablePlugins(JavaAppPackaging)
   .settings(common)
   .settings(
     maintainer := "tripletail@runbox.com",
@@ -42,7 +42,7 @@ lazy val client = (project in file("client"))
 
 lazy val server = (project in file("server"))
   .dependsOn(shared)
-  .enablePlugins(JDKPackagerPlugin)
+  .enablePlugins(JavaServerAppPackaging)
   .settings(common)
   .settings(
     maintainer := "tripletail@runbox.com",
