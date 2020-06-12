@@ -1,5 +1,7 @@
 name := "tripletail"
 
+val scalatestVersion = "3.1.2"
+
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
   version := "0.1-SNAPSHOT",
@@ -19,7 +21,7 @@ lazy val shared = (project in file("shared"))
   .settings(
     libraryDependencies ++= Seq(
       "com.lihaoyi" %% "upickle" % "1.1.0",
-      "org.scalatest" %% "scalatest" % "3.1.2" % Test
+      "org.scalatest" %% "scalatest" % scalatestVersion % Test
     )
   )
 
@@ -66,7 +68,7 @@ lazy val server = (project in file("server"))
         "ch.qos.logback" % "logback-classic" % "1.2.3",
         "com.typesafe.akka" %% "akka-http-testkit" % akkkHttpVersion % Test,
         "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test,
-        "org.scalatest" %% "scalatest" % "3.1.2" % Test
+        "org.scalatest" %% "scalatest" % scalatestVersion % Test
       )
     },
     scalacOptions ++= Seq("-Ywarn-macros:after"),
