@@ -15,7 +15,6 @@ object Client extends JFXApp {
   implicit val executor = system.dispatcher
   val logger = system.log
   val serverProxy = ServerProxy(system, executor)
-  val url = conf.getString("server.url")
   val api = conf.getString("server.api")
 
   val appPane = new VBox {
