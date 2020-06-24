@@ -4,7 +4,7 @@ val akkaVersion = "2.6.6"
 val akkkHttpVersion = "10.1.12"
 val typesafeConfVersion = "1.4.0"
 val upickleVersion = "1.1.0"
-val scalatestVersion = "3.1.2"
+val scalatestVersion = "3.2.0"
 
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
