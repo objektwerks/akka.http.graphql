@@ -18,18 +18,14 @@ Dev
 
 Test
 ----
-1. sbt clean shared/test
-2. sbt clean server/test
-3. sbt clean client/test
+1. sbt clean test | shared/test | server/test | client/test
 
 Bloop
 -----
 1. sbt bloopInstall
 2. bloop clean tripletail
 3. bloop compile tripletail
-4. bloop test shared
-5. bloop test server
-6. bloop test client
+4. bloop test shared | server | client
 
 Run
 ---
