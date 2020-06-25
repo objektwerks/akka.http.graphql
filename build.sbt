@@ -6,6 +6,14 @@ val typesafeConfVersion = "1.4.0"
 val upickleVersion = "1.1.0"
 val scalatestVersion = "3.2.0"
 
+lazy val osName = System.getProperty("os.name") match {
+  case n if n.startsWith("Linux")   => "linux"
+  case n if n.startsWith("Mac")     => "mac"
+  case n if n.startsWith("Windows") => "win"
+  case _ => throw new Exception("Unknown platform!")
+}
+lazy val javaFXModules = Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
+
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
   version := "0.1-SNAPSHOT",
@@ -37,11 +45,8 @@ lazy val client = (project in file("client"))
     maintainer := "tripletail@runbox.com",
     mainClass := Some("tripletail.Client"),
     libraryDependencies ++= {
-      val openjfxVersion = "14"
       Seq(
-        "org.scalafx" %% "scalafx" % "8.0.192-R14",
-        "org.openjfx" % "javafx-controls" % openjfxVersion,
-        "org.openjfx" % "javafx-media" % openjfxVersion,
+        "org.scalafx" %% "scalafx" % "14-R19",
         "com.typesafe.akka" %% "akka-actor" % akkaVersion,
         "com.typesafe.akka" %% "akka-http" % akkkHttpVersion,
         "com.typesafe.akka" %% "akka-stream" % akkaVersion,
@@ -50,6 +55,9 @@ lazy val client = (project in file("client"))
         "com.lihaoyi" %% "upickle" % upickleVersion
       )
     }
+  )
+  .settings(
+    libraryDependencies ++= javaFXModules.map( m => "org.openjfx" % s"javafx-$m" % "14.0.1" classifier osName )
   )
 
 lazy val server = (project in file("server"))
