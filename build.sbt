@@ -1,6 +1,6 @@
 name := "tripletail"
 
-val akkaVersion = "2.6.6"
+val akkaVersion = "2.6.8"
 val akkkHttpVersion = "10.1.12"
 val typesafeConfVersion = "1.4.0"
 val upickleVersion = "1.1.0"
