@@ -1,6 +1,7 @@
 .bloop
 .idea
 .metals
+.vscode
 shared/target/
 client/target/
 server/target/
