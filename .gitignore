@@ -2,10 +2,8 @@ shared/target/
 client/target/
 server/target/
 .*
-!/.gitignore
-project/.bloop
+!.gitignore
 project/metals.sbt
 project/project/
 project/target/
 target/
-.DS_Store
