@@ -1,10 +1,10 @@
 name := "tripletail"
 
-val akkaVersion = "2.6.8"
-val akkkHttpVersion = "10.2.0"
+val akkaVersion = "2.6.10"
+val akkkHttpVersion = "10.2.1"
 val typesafeConfVersion = "1.4.0"
-val upickleVersion = "1.1.0"
-val scalatestVersion = "3.2.0"
+val upickleVersion = "1.2.2"
+val scalatestVersion = "3.2.2"
 
 lazy val osName = System.getProperty("os.name") match {
   case n if n.startsWith("Linux")   => "linux"
@@ -32,7 +32,7 @@ lazy val shared = (project in file("shared"))
   .settings(common)
   .settings(
     libraryDependencies ++= Seq(
-      "com.lihaoyi" %% "upickle" % "1.1.0",
+      "com.lihaoyi" %% "upickle" % upickleVersion,
       "org.scalatest" %% "scalatest" % scalatestVersion % Test
     )
   )
@@ -68,18 +68,18 @@ lazy val server = (project in file("server"))
     maintainer := "tripletail@runbox.com",
     mainClass := Some("tripletail.Server"),
     libraryDependencies ++= {
-      val quillVersion = "3.5.2"
+      val quillVersion = "3.5.3"
       Seq(
         "com.typesafe.akka" %% "akka-actor" % akkaVersion,
         "com.typesafe.akka" %% "akka-http" % akkkHttpVersion,
         "com.typesafe.akka" %% "akka-stream" % akkaVersion,
         "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
-        "de.heikoseeberger" %% "akka-http-upickle" % "1.32.0",
+        "de.heikoseeberger" %% "akka-http-upickle" % "1.35.0",
         "com.lihaoyi" %% "upickle" % upickleVersion,
         "io.getquill" %% "quill-sql" % quillVersion,
         "io.getquill" %% "quill-async-postgres" % quillVersion,
         "com.github.cb372" %% "scalacache-caffeine" % "0.28.0",
-        "org.jodd" % "jodd-mail" % "5.1.4",
+        "org.jodd" % "jodd-mail" % "6.0.1",
         "com.typesafe" % "config" % typesafeConfVersion,
         "ch.qos.logback" % "logback-classic" % "1.2.3",
         "com.typesafe.akka" %% "akka-http-testkit" % akkkHttpVersion % Test,
