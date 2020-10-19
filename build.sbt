@@ -17,7 +17,7 @@ lazy val javaFXModules = Seq("base", "controls", "fxml", "graphics", "media", "s
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
   version := "0.1-SNAPSHOT",
-  scalaVersion := "2.13.2"
+  scalaVersion := "2.13.3"
 )
 
 lazy val tripletail = project.in(file("."))
