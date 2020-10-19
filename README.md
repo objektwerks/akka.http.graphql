@@ -203,7 +203,7 @@ Postgresql
 Database
 --------
 1. psql postgres
-2. CREATE USER pool WITH ENCRYPTED PASSWORD 'tripletail';
+2. CREATE USER tripletail WITH ENCRYPTED PASSWORD 'tripletail';
 3. CREATE DATABASE tripletail OWNER tripletail;
 4. GRANT ALL PRIVILEGES ON DATABASE tripletail TO tripletail;
 5. \l
