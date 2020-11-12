@@ -4,15 +4,16 @@ val akkaVersion = "2.6.10"
 val akkkHttpVersion = "10.2.1"
 val typesafeConfVersion = "1.4.0"
 val upickleVersion = "1.2.2"
-val scalatestVersion = "3.2.2"
+val scalatestVersion = "3.2.3"
 
 lazy val osName = System.getProperty("os.name") match {
   case n if n.startsWith("Linux")   => "linux"
   case n if n.startsWith("Mac")     => "mac"
   case n if n.startsWith("Windows") => "win"
-  case _ => throw new Exception("Unknown platform!")
+  case _                            => throw new Exception("Unknown platform!")
 }
-lazy val javaFXModules = Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
+lazy val javaFXModules =
+  Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
 
 lazy val common = Defaults.coreDefaultSettings ++ Seq(
   organization := "objektwerks",
@@ -20,7 +21,8 @@ lazy val common = Defaults.coreDefaultSettings ++ Seq(
   scalaVersion := "2.13.3"
 )
 
-lazy val tripletail = project.in(file("."))
+lazy val tripletail = project
+  .in(file("."))
   .aggregate(shared, client, server)
   .settings(common)
   .settings(
@@ -57,7 +59,9 @@ lazy val client = (project in file("client"))
     }
   )
   .settings(
-    libraryDependencies ++= javaFXModules.map( m => "org.openjfx" % s"javafx-$m" % "14.0.1" classifier osName )
+    libraryDependencies ++= javaFXModules.map(m =>
+      "org.openjfx" % s"javafx-$m" % "14.0.1" classifier osName
+    )
   )
 
 lazy val server = (project in file("server"))
