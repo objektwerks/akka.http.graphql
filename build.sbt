@@ -1,7 +1,7 @@
 name := "tripletail"
 
 val akkaVersion = "2.6.10"
-val akkkHttpVersion = "10.2.1"
+val akkkHttpVersion = "10.2.2"
 val typesafeConfVersion = "1.4.0"
 val upickleVersion = "1.2.2"
 val scalatestVersion = "3.2.3"
@@ -72,7 +72,7 @@ lazy val server = (project in file("server"))
     maintainer := "tripletail@runbox.com",
     mainClass := Some("tripletail.Server"),
     libraryDependencies ++= {
-      val quillVersion = "3.5.3"
+      val quillVersion = "3.6.0"
       Seq(
         "com.typesafe.akka" %% "akka-actor" % akkaVersion,
         "com.typesafe.akka" %% "akka-http" % akkkHttpVersion,
