@@ -16,7 +16,4 @@ Test
 Run
 ---
 1. sbt clean run
-
-GraphQL Client
---------------
-1. http://localhost:7777/
+2. view graphql client at: http://localhost:7777/
