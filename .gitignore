@@ -1,6 +1,3 @@
-shared/target/
-client/target/
-server/target/
 .*
 !.gitignore
 project/metals.sbt
