@@ -11,7 +11,7 @@ object UserRouter {
 }
 
 class UserRouter(implicit executor: ExecutionContextExecutor) extends Directives with UserSchema with UserJsonSupport {
-  val graphQLExecutor = GraphQLExecutor()
+  private val graphQLExecutor = GraphQLExecutor()
 
   val index = path("") {
     getFromResource("user/graphql.html")
