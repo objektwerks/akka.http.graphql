@@ -17,7 +17,7 @@ object UserRouter {
   def apply(implicit executor: ExecutionContextExecutor): UserRouter = new UserRouter()
 }
 
-class UserRouter(implicit val executor: ExecutionContextExecutor) extends Directives with UserGraphQl with UserJsonSupport {
+class UserRouter(implicit val executor: ExecutionContextExecutor) extends Directives with UserSchema with UserJsonSupport {
   def executeGraphQLQuery(query: Document,
                           op: Option[String],
                           vars: JsObject) =

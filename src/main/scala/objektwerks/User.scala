@@ -13,7 +13,7 @@ trait Identifiable extends Product with Serializable {
 
 case class User(id: Int, name: String) extends Identifiable
 
-trait UserGraphQl {
+trait UserSchema {
   implicit val IdentifiableType = InterfaceType(
     "Identifiable",
     "Entity with id field.",

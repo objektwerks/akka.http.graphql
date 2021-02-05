@@ -11,7 +11,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.language.postfixOps
 
-class UserSchemaTest extends AnyFunSuite with Matchers with UserGraphQl {
+class UserSchemaTest extends AnyFunSuite with Matchers with UserSchema {
   import UserQueries._
 
   test("list") {
