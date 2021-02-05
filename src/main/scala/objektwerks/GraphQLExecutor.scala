@@ -39,7 +39,7 @@ class GraphQLExecutor(implicit executor: ExecutionContextExecutor) extends Direc
 
   private def executeQuery(query: Document,
                            operationName: Option[String],
-                           variables: JsObject): Future[(StatusCode, SprayJsonResultMarshaller.Node)] =
+                           variables: JsObject): Future[(StatusCode, JsValue)] =
     Executor.execute(UserSchema, query, UserStore(), variables = variables, operationName = operationName)
       .map( OK -> _ )
       .recover {
