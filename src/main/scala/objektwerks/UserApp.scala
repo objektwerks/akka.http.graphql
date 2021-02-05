@@ -19,7 +19,7 @@ object UserApp {
 
     implicit val system = ActorSystem.create(name, conf)
     implicit val executor = system.dispatcher
-    val routes = UserRouter(executor).routes
+    val routes = UserRouter().routes
 
     val server = Http()
       .newServerAt(host, port)

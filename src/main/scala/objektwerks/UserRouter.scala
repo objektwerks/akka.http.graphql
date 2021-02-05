@@ -14,10 +14,10 @@ import scala.concurrent.ExecutionContextExecutor
 import scala.util.{Failure, Success}
 
 object UserRouter {
-  def apply(implicit executor: ExecutionContextExecutor): UserRouter = new UserRouter()
+  def apply()(implicit executor: ExecutionContextExecutor): UserRouter = new UserRouter()
 }
 
-class UserRouter(implicit val executor: ExecutionContextExecutor) extends Directives with UserSchema with UserJsonSupport {
+class UserRouter(implicit executor: ExecutionContextExecutor) extends Directives with UserSchema with UserJsonSupport {
   def executeGraphQLQuery(query: Document,
                           op: Option[String],
                           vars: JsObject) =
