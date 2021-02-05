@@ -11,7 +11,7 @@ object UserRouter {
 }
 
 class UserRouter(implicit executor: ExecutionContextExecutor) extends Directives with UserSchema with UserJsonSupport {
-  private val exectutor = new GraphQLExecutor()
+  val graphQLExecutor = GraphQLExecutor()
 
   val index = path("") {
     getFromResource("user/graphql.html")
@@ -20,7 +20,7 @@ class UserRouter(implicit executor: ExecutionContextExecutor) extends Directives
   val api = path("graphql") {
     (get | post) {
       entity(as[JsValue]) { queryJson =>
-        exectutor.execute(queryJson)
+        graphQLExecutor.execute(queryJson)
       }
     }
   }
