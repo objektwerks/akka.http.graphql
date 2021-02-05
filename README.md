@@ -2,6 +2,13 @@ Akka Http GraphQL
 -----------------
 >App using Akka-Http, GraphQL and Sangria.
 
+Analysis
+--------
+>Despite all the ***brouhaha*** surrounding GraphQL, Scala developers will likely find it verbose.
+
+>ScalaJs ***noticeably*** simplifies Json- ***and*** Scala-encoded ***shared messages*** between Json
+>clients and Scala servers.
+
 Test
 ----
 1. sbt clean test
