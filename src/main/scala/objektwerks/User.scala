@@ -12,7 +12,7 @@ trait Identifiable {
 
 final case class User(id: Int, name: String) extends Identifiable
 
-trait UserStore {
+class UserStore {
   private val users = List( User(1, "Fred Flintstone"), User(2, "Barney Rebel") )
 
   def list: List[User] = users
@@ -20,7 +20,11 @@ trait UserStore {
   def find(id: Int): Option[User] = users.find( user => user.id == id )
 }
 
-trait UserGraphQl extends UserStore {
+object UserStore {
+  def apply(): UserStore = new UserStore()
+}
+
+trait UserGraphQl {
   implicit val IdentifiableType = InterfaceType(
     "Identifiable",
     "Entity with id field.",
@@ -32,17 +36,17 @@ trait UserGraphQl extends UserStore {
   val Id = Argument("id", IntType)
 
   val UserQueryType = ObjectType("Query", fields[UserStore, Unit](
-    Field("user", 
+    Field("find",
       OptionType(UserType),
       description = Some("Returns user by id."),
       arguments = Id :: Nil,
       resolve = context => context.ctx.find(context arg Id)
     ),
 
-    Field("users", 
+    Field("list",
       ListType(UserType),
       description = Some("Returns ist of users."),
-      resolve = _.ctx.list)
+      resolve = context => context.ctx.list)
     )
   )
 
