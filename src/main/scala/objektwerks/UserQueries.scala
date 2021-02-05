@@ -1,12 +1,11 @@
 package objektwerks
 
-import sangria.ast.Document
 import sangria.macros._
 
 import spray.json._
 
 object UserQueries {
-  val list: Document =
+  val listQuery =
     graphql"""
       query List {
         list {
@@ -15,7 +14,8 @@ object UserQueries {
         }
       }
     """
-  val find =
+
+  val findQuery =
     graphql"""
       query Find {
         find(id: 1) {
@@ -23,13 +23,15 @@ object UserQueries {
         }
       }
     """
-  val listAsJson =
+
+  val listQueryAsJson =
     """
       {
         "query": "{ list { id name } }"
       }
     """.parseJson
-  val findAsJson =
+
+  val findQueryAsJson =
     """
       {
         "query": "{ find(id: 1) { name } }"
