@@ -4,8 +4,7 @@ Akka Http GraphQL
 
 Todo
 ----
-1. SchemaTest
-2. GraphQL route
+1. GraphQL route
 
 Test
 ----
