@@ -4,6 +4,7 @@ import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 
 import sangria.macros.derive._
 import sangria.schema._
+
 import spray.json._
 
 trait Identifiable {

@@ -2,10 +2,6 @@ Akka Http GraphQL
 -----------------
 >Prototype app using Akka-Http, GraphQL and Sangria.
 
-Todo
-----
-1. GraphQL route
-
 Test
 ----
 1. sbt clean test
