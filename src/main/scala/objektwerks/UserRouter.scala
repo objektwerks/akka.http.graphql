@@ -1,5 +1,6 @@
 package objektwerks
 
+import akka.http.scaladsl.model.StatusCode
 import akka.http.scaladsl.model.StatusCodes.{BadRequest, InternalServerError, OK}
 import akka.http.scaladsl.server.{Directives, Route}
 
@@ -10,7 +11,7 @@ import sangria.parser.QueryParser
 
 import spray.json.{JsObject, JsString, JsValue}
 
-import scala.concurrent.ExecutionContextExecutor
+import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.util.{Failure, Success}
 
 object UserRouter {
@@ -20,7 +21,7 @@ object UserRouter {
 class UserRouter(implicit executor: ExecutionContextExecutor) extends Directives with UserSchema with UserJsonSupport {
   def executeGraphQLQuery(query: Document,
                           op: Option[String],
-                          vars: JsObject) =
+                          vars: JsObject): Future[(StatusCode, SprayJsonResultMarshaller.Node)] =
     Executor.execute(UserSchema, query, UserStore(), variables = vars, operationName = op)
       .map( OK -> _ )
       .recover {
