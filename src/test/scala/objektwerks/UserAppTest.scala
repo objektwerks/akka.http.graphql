@@ -34,14 +34,14 @@ class UserAppTest extends AnyWordSpec with Matchers with ScalatestRouteTest with
   println(s"find: ${UserQueries.findAsJson}")
 
   "app" should {
-    "graphql" in {
+    "load graphql" in {
       Get("/") ~> routes ~> check {
         status shouldBe StatusCodes.OK
       }
     }
   }
 
-  "app" should {
+  "list" should {
     "list" in {
       Post("/graphql", UserQueries.listAsJson) ~> routes ~> check {
         status shouldBe StatusCodes.OK
@@ -49,7 +49,7 @@ class UserAppTest extends AnyWordSpec with Matchers with ScalatestRouteTest with
     }
   }
 
-  "app" should {
+  "find" should {
     "find" in {
       Post("/graphql", UserQueries.findAsJson) ~> routes ~> check {
         status shouldBe StatusCodes.OK
