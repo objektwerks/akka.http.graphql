@@ -9,19 +9,20 @@ import org.slf4j.LoggerFactory
 
 import scala.io.StdIn
 
-object UserApp extends UserRouter {
+object UserApp {
   def main(args: Array[String]): Unit = {
     val logger = LoggerFactory.getLogger(getClass)
     val conf = ConfigFactory.load("user.app.conf")
     val name = conf.getString("app.name")
+    val host = conf.getString("app.host")
+    val port = conf.getInt("app.port")
+
     implicit val system = ActorSystem.create(name, conf)
     implicit val executor = system.dispatcher
 
-    val host = conf.getString("app.host")
-    val port = conf.getInt("app.port")
     val server = Http()
       .newServerAt(host, port)
-      .bindFlow(routes)
+      .bindFlow(UserRouter.routes)
 
     logger.info(s"*** $name started at http://$host:$port/\nPress RETURN to stop...")
 

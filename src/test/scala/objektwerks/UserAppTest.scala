@@ -11,13 +11,15 @@ import org.scalatest.BeforeAndAfterAll
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-class UserAppTest extends AnyWordSpec with Matchers with ScalatestRouteTest with BeforeAndAfterAll with UserRouter {
+class UserAppTest extends AnyWordSpec with Matchers with ScalatestRouteTest with BeforeAndAfterAll {
   val conf = ConfigFactory.load("user.app.conf")
   val name = conf.getString("app.name")
-  val actorRefFactory = ActorSystem.create(name, conf)
-
   val host = conf.getString("app.host")
   val port = conf.getInt("app.port")
+  val routes = UserRouter.routes
+
+  val actorRefFactory = ActorSystem.create(name, conf)
+
   val server = Http()
     .newServerAt(host, port)
     .bindFlow(routes)
