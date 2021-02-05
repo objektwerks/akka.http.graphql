@@ -1,11 +1,56 @@
 package objektwerks
 
-import akka.http.scaladsl.server.Directives
+import akka.http.scaladsl.model.StatusCodes.{BadRequest, InternalServerError, OK}
+import akka.http.scaladsl.server.{Directives, Route}
+import sangria.ast.Document
+import sangria.execution._
+import sangria.marshalling.sprayJson._
+import sangria.parser.QueryParser
+import spray.json.{JsObject, JsString, JsValue}
 
-object UserRouter  extends Directives with UserGraphQl with UserJsonSupport {
+import scala.concurrent.ExecutionContextExecutor
+import scala.util.{Failure, Success}
+
+object UserRouter {
+  def apply(implicit executor: ExecutionContextExecutor): UserRouter = new UserRouter()
+}
+
+class UserRouter(implicit val executor: ExecutionContextExecutor) extends Directives with UserGraphQl with UserJsonSupport {
+  def executeGraphQLQuery(query: Document,
+                          op: Option[String],
+                          vars: JsObject) =
+    Executor.execute(UserSchema, query, UserStore(), variables = vars, operationName = op)
+      .map( OK -> _ )
+      .recover {
+        case error: QueryAnalysisError => BadRequest -> error.resolveError
+        case error: ErrorWithResolver => InternalServerError -> error.resolveError
+      }
+
+  def graphQLEndpoint(queryJson: JsValue): Route = {
+    val JsObject(fields) = queryJson
+    val JsString(query) = fields("query")
+    val op = fields.get("operationName") collect {
+      case JsString(op) => op
+    }
+    val vars = fields.get("variables") match {
+      case Some(obj: JsObject) => obj
+      case _ => JsObject.empty
+    }
+    QueryParser.parse(query) match {
+      case Success(ast) => complete( executeGraphQLQuery(ast, op, vars) )
+      case Failure(error) => complete(BadRequest, JsObject("error" -> JsString(error.getMessage)))
+    }
+  }
+
   val index = path("") {
     getFromResource("user/graphql.html")
   }
-  
-  val routes = index
+
+  val api = (post & path("graphql")) {
+    entity(as[JsValue]) { queryJson =>
+      graphQLEndpoint(queryJson)
+    }
+  }
+
+  val routes = index ~ api
 }
