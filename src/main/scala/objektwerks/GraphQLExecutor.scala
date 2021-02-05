@@ -19,9 +19,15 @@ object GraphQLExecutor {
 }
 
 class GraphQLExecutor(implicit executor: ExecutionContextExecutor) extends Directives with UserSchema with UserJsonSupport {
-  def execute(queryJson: JsValue): Route = parseExecuteQuery(queryJson)
+  def execute(queryJson: JsValue): Route = {
+    val (query, operationName, variables) = parseQuery(queryJson)
+    QueryParser.parse(query) match {
+      case Success(document) => complete( executeQuery(document, operationName, variables) )
+      case Failure(error) => complete(BadRequest, JsObject("error" -> JsString(error.getMessage)))
+    }
+  }
 
-  private def parseExecuteQuery(queryJson: JsValue): Route = {
+  private def parseQuery(queryJson: JsValue): (String, Option[String], JsObject) = {
     val JsObject(fields) = queryJson
     val JsString(query) = fields("query")
     val operationName = fields.get("operationName") collect {
@@ -31,10 +37,7 @@ class GraphQLExecutor(implicit executor: ExecutionContextExecutor) extends Direc
       case Some(jsObject: JsObject) => jsObject
       case _ => JsObject.empty
     }
-    QueryParser.parse(query) match {
-      case Success(document) => complete( executeQuery(document, operationName, variables) )
-      case Failure(error) => complete(BadRequest, JsObject("error" -> JsString(error.getMessage)))
-    }
+    (query, operationName, variables)
   }
 
   private def executeQuery(query: Document,
