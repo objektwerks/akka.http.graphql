@@ -3,6 +3,10 @@ package objektwerks
 import sangria.macros.derive.{Interfaces, deriveObjectType}
 import sangria.schema.{Argument, Field, IntType, InterfaceType, ListType, ObjectType, OptionType, Schema, fields}
 
+trait Identifiable extends Product with Serializable {
+  def id: Int
+}
+
 trait UserSchema {
   implicit val IdentifiableType = InterfaceType(
     "Identifiable",
