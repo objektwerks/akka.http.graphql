@@ -1,6 +1,6 @@
 Akka Http GraphQL
 -----------------
->Prototype app using Akka-Http, GraphQL and Sangria.
+>App using Akka-Http, GraphQL and Sangria.
 
 Test
 ----
