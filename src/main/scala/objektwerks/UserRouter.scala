@@ -52,7 +52,6 @@ class UserRouter(implicit val executor: ExecutionContextExecutor) extends Direct
   val api = path("graphql") {
     getOrPost {
       entity(as[JsValue]) { queryJson =>
-        println(s"queryJson: $queryJson")
         graphQLEndpoint(queryJson)
       }
     }

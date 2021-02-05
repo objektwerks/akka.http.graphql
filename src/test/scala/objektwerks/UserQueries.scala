@@ -28,11 +28,11 @@ object UserQueries {
       {
         "query": "{ list { id name } }"
       }
-    """.parseJson.compactPrint
+    """.parseJson
   val findAsJson =
     """
       {
         "query": "{ find(id: 1) { name } }"
       }
-    """.parseJson.compactPrint
+    """.parseJson
 }
