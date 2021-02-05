@@ -4,7 +4,6 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
 import sangria.execution._
-import sangria.macros._
 import sangria.marshalling.sprayJson._
 
 import scala.concurrent.Await
@@ -13,23 +12,7 @@ import scala.concurrent.duration._
 import scala.language.postfixOps
 
 class UserSchemaTest extends AnyFunSuite with Matchers with UserGraphQl {
-  val list =
-    graphql"""
-      query ListUsers {
-        list {
-          id
-          name
-        }
-      }
-    """
-  val find =
-    graphql"""
-      query FindUserById {
-        find(id: 1) {
-          name
-        }
-      }
-    """
+  import UserQueries._
 
   test("list") {
     val result = Executor.execute(UserSchema, list, UserStore())

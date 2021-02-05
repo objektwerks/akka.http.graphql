@@ -16,10 +16,10 @@ class UserAppTest extends AnyWordSpec with Matchers with ScalatestRouteTest with
   val name = conf.getString("app.name")
   val host = conf.getString("app.host")
   val port = conf.getInt("app.port")
-  val routes = new UserRouter().routes
 
   val actorRefFactory = ActorSystem.create(name, conf)
 
+  val routes = UserRouter(executor).routes
   val server = Http()
     .newServerAt(host, port)
     .bindFlow(routes)
@@ -33,6 +33,12 @@ class UserAppTest extends AnyWordSpec with Matchers with ScalatestRouteTest with
   "UserApp" should {
     "graphql" in {
       Get("/") ~> routes ~> check {
+        status shouldBe StatusCodes.OK
+      }
+      Post("/graphql", UserQueries.listAsString) ~> routes ~> check {
+        status shouldBe StatusCodes.OK
+      }
+      Post("/graphql", UserQueries.findAsString) ~> routes ~> check {
         status shouldBe StatusCodes.OK
       }
     }
