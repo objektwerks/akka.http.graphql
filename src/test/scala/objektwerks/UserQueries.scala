@@ -3,18 +3,11 @@ package objektwerks
 import sangria.ast.Document
 import sangria.macros._
 
+import spray.json._
+
 object UserQueries {
   val list: Document =
     graphql"""
-      query List {
-        list {
-          id
-          name
-        }
-      }
-    """
-  val listAsString =
-    """
       query List {
         list {
           id
@@ -30,12 +23,19 @@ object UserQueries {
         }
       }
     """
-  val findAsString =
+  val listAsJson =
     """
-      query Find {
-        find(id: 1) {
-          name
-        }
+      {
+        "query": "List",
+        "operationName": "list"
       }
+    """.parseJson.compactPrint
+  val findAsJson =
     """
+      {
+        "query": "Find",
+        "operationName": "find",
+        "variables": { "id": 1 }
+      }
+    """.parseJson.compactPrint
 }

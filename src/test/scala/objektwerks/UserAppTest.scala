@@ -30,15 +30,28 @@ class UserAppTest extends AnyWordSpec with Matchers with ScalatestRouteTest with
       .onComplete(_ => system.terminate())
   }
 
-  "UserApp" should {
+  println(s"list: ${UserQueries.listAsJson}")
+  println(s"find: ${UserQueries.findAsJson}")
+
+  "app" should {
     "graphql" in {
       Get("/") ~> routes ~> check {
         status shouldBe StatusCodes.OK
       }
-      Post("/graphql", UserQueries.listAsString) ~> routes ~> check {
+    }
+  }
+
+  "app" should {
+    "list" in {
+      Post("/graphql", UserQueries.listAsJson) ~> routes ~> check {
         status shouldBe StatusCodes.OK
       }
-      Post("/graphql", UserQueries.findAsString) ~> routes ~> check {
+    }
+  }
+
+  "app" should {
+    "find" in {
+      Post("/graphql", UserQueries.findAsJson) ~> routes ~> check {
         status shouldBe StatusCodes.OK
       }
     }
