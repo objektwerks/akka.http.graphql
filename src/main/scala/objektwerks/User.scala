@@ -11,19 +11,7 @@ trait Identifiable {
   def id: Int
 }
 
-final case class User(id: Int, name: String) extends Identifiable
-
-class UserStore {
-  private val users = List( User(1, "Fred Flintstone"), User(2, "Barney Rebel") )
-
-  def list: List[User] = users
-
-  def find(id: Int): Option[User] = users.find( user => user.id == id )
-}
-
-object UserStore {
-  def apply(): UserStore = new UserStore()
-}
+case class User(id: Int, name: String) extends Identifiable
 
 trait UserGraphQl {
   implicit val IdentifiableType = InterfaceType(
