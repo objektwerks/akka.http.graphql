@@ -23,7 +23,7 @@ class GraphQLExecutor(implicit executor: ExecutionContextExecutor) extends Direc
     val (query, operationName, variables) = parseQuery(queryJson)
     QueryParser.parse(query) match {
       case Success(document) => complete( executeQuery(document, operationName, variables) )
-      case Failure(error) => complete(BadRequest, JsObject("error" -> JsString(error.getMessage)))
+      case Failure(error) => complete( BadRequest, JsObject("error" -> JsString( error.getMessage ) ) )
     }
   }
 
