@@ -7,7 +7,7 @@ import sangria.schema._
 
 import spray.json._
 
-trait Identifiable {
+trait Identifiable extends Product with Serializable {
   def id: Int
 }
 
