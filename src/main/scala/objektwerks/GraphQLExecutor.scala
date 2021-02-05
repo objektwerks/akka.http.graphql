@@ -19,28 +19,28 @@ object GraphQLExecutor {
 }
 
 class GraphQLExecutor(implicit executor: ExecutionContextExecutor) extends Directives with UserSchema with UserJsonSupport {
-  def execute(queryJson: JsValue): Route = graphQLEndpoint(queryJson)
+  def execute(queryJson: JsValue): Route = parseExecuteQuery(queryJson)
 
-  private def graphQLEndpoint(queryJson: JsValue): Route = {
+  private def parseExecuteQuery(queryJson: JsValue): Route = {
     val JsObject(fields) = queryJson
     val JsString(query) = fields("query")
-    val op = fields.get("operationName") collect {
+    val operationName = fields.get("operationName") collect {
       case JsString(op) => op
     }
-    val vars = fields.get("variables") match {
-      case Some(obj: JsObject) => obj
+    val variables = fields.get("variables") match {
+      case Some(jsObject: JsObject) => jsObject
       case _ => JsObject.empty
     }
     QueryParser.parse(query) match {
-      case Success(ast) => complete( executeGraphQLQuery(ast, op, vars) )
+      case Success(document) => complete( executeQuery(document, operationName, variables) )
       case Failure(error) => complete(BadRequest, JsObject("error" -> JsString(error.getMessage)))
     }
   }
 
-  private def executeGraphQLQuery(query: Document,
-                                  op: Option[String],
-                                  vars: JsObject): Future[(StatusCode, SprayJsonResultMarshaller.Node)] =
-    Executor.execute(UserSchema, query, UserStore(), variables = vars, operationName = op)
+  private def executeQuery(query: Document,
+                           operationName: Option[String],
+                           variables: JsObject): Future[(StatusCode, SprayJsonResultMarshaller.Node)] =
+    Executor.execute(UserSchema, query, UserStore(), variables = variables, operationName = operationName)
       .map( OK -> _ )
       .recover {
         case error: QueryAnalysisError => BadRequest -> error.resolveError
