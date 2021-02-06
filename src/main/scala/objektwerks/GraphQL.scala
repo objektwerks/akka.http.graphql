@@ -2,7 +2,6 @@ package objektwerks
 
 import akka.http.scaladsl.model.StatusCode
 import akka.http.scaladsl.model.StatusCodes.{BadRequest, InternalServerError, OK}
-import akka.http.scaladsl.server.Directives
 
 import sangria.ast.Document
 import sangria.execution.{ErrorWithResolver, Executor, QueryAnalysisError}
@@ -14,11 +13,7 @@ import spray.json.{JsObject, JsString, JsValue}
 import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.util.Try
 
-object GraphQL {
-  def apply()(implicit executor: ExecutionContextExecutor): GraphQL = new GraphQL()
-}
-
-class GraphQL(implicit executor: ExecutionContextExecutor) extends Directives with UserSchema with UserJsonSupport {
+object GraphQL extends UserSchema {
   def parseQuery(queryJsValue: JsValue): (String, Option[String], JsObject) = {
     val JsObject(fields) = queryJsValue
     val JsString(query) = fields("query")
@@ -36,7 +31,7 @@ class GraphQL(implicit executor: ExecutionContextExecutor) extends Directives wi
 
   def executeQuery(query: Document,
                    operationName: Option[String],
-                   variables: JsObject): Future[(StatusCode, JsValue)] =
+                   variables: JsObject)(implicit executor: ExecutionContextExecutor): Future[(StatusCode, JsValue)] =
     Executor
       .execute(UserSchema, query, UserStore(), variables = variables, operationName = operationName)
       .map( OK -> _ )

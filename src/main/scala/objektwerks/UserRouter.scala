@@ -2,6 +2,7 @@ package objektwerks
 
 import akka.http.scaladsl.model.StatusCodes.BadRequest
 import akka.http.scaladsl.server.Directives
+import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 
 import spray.json.{JsObject, JsString, JsValue}
 
@@ -12,9 +13,7 @@ object UserRouter {
   def apply()(implicit executor: ExecutionContextExecutor): UserRouter = new UserRouter()
 }
 
-class UserRouter(implicit executor: ExecutionContextExecutor) extends Directives with UserSchema with UserJsonSupport {
-  private val graphQL = GraphQL()
-
+class UserRouter(implicit executor: ExecutionContextExecutor) extends Directives {
   val index = path("") {
     getFromResource("user/graphql.html")
   }
@@ -22,9 +21,9 @@ class UserRouter(implicit executor: ExecutionContextExecutor) extends Directives
   val api = path("graphql") {
     (get | post) {
       entity(as[JsValue]) { queryJsValue =>
-        val (query, operationName, variables) = graphQL.parseQuery(queryJsValue)
-        graphQL.parseQuery(query) match {
-          case Success(document) => complete( graphQL.executeQuery(document, operationName, variables) )
+        val (query, operationName, variables) = GraphQL.parseQuery(queryJsValue)
+        GraphQL.parseQuery(query) match {
+          case Success(document) => complete( GraphQL.executeQuery(document, operationName, variables) )
           case Failure(error) => complete( BadRequest, JsObject("error" -> JsString( error.getMessage ) ) )
         }
       }
