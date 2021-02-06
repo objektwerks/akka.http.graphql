@@ -14,11 +14,11 @@ import spray.json.{JsObject, JsString, JsValue}
 import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.util.{Failure, Success}
 
-object GraphQLExecutor {
-  def apply()(implicit executor: ExecutionContextExecutor): GraphQLExecutor = new GraphQLExecutor()
+object GraphQL {
+  def apply()(implicit executor: ExecutionContextExecutor): GraphQL = new GraphQL()
 }
 
-class GraphQLExecutor(implicit executor: ExecutionContextExecutor) extends Directives with UserSchema with UserJsonSupport {
+class GraphQL(implicit executor: ExecutionContextExecutor) extends Directives with UserSchema with UserJsonSupport {
   def execute(queryJson: JsValue): Route = {
     val (query, operationName, variables) = parseQuery(queryJson)
     QueryParser.parse(query) match {
