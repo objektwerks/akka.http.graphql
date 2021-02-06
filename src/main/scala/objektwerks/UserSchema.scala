@@ -8,6 +8,10 @@ trait Identifiable extends Product with Serializable {
 }
 
 object UserSchema {
+  def apply(): UserSchema = new UserSchema
+}
+
+class UserSchema {
   val IdentifiableType = InterfaceType(
     "Identifiable",
     "Entity with id field.",
