@@ -2,7 +2,7 @@ package objektwerks
 
 import akka.http.scaladsl.model.StatusCode
 import akka.http.scaladsl.model.StatusCodes.{BadRequest, InternalServerError, OK}
-import akka.http.scaladsl.server.{Directives, Route}
+import akka.http.scaladsl.server.Directives
 
 import sangria.ast.Document
 import sangria.execution.{ErrorWithResolver, Executor, QueryAnalysisError}
@@ -12,23 +12,15 @@ import sangria.parser.QueryParser
 import spray.json.{JsObject, JsString, JsValue}
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
-import scala.util.{Failure, Success}
+import scala.util.Try
 
 object GraphQL {
   def apply()(implicit executor: ExecutionContextExecutor): GraphQL = new GraphQL()
 }
 
 class GraphQL(implicit executor: ExecutionContextExecutor) extends Directives with UserSchema with UserJsonSupport {
-  def execute(queryJson: JsValue): Route = {
-    val (query, operationName, variables) = parseQuery(queryJson)
-    QueryParser.parse(query) match {
-      case Success(document) => complete( executeQuery(document, operationName, variables) )
-      case Failure(error) => complete( BadRequest, JsObject("error" -> JsString( error.getMessage ) ) )
-    }
-  }
-
-  private def parseQuery(queryJson: JsValue): (String, Option[String], JsObject) = {
-    val JsObject(fields) = queryJson
+  def parseQuery(queryJsValue: JsValue): (String, Option[String], JsObject) = {
+    val JsObject(fields) = queryJsValue
     val JsString(query) = fields("query")
     val operationName = fields.get("operationName") collect {
       case JsString(op) => op
@@ -40,10 +32,13 @@ class GraphQL(implicit executor: ExecutionContextExecutor) extends Directives wi
     (query, operationName, variables)
   }
 
-  private def executeQuery(query: Document,
-                           operationName: Option[String],
-                           variables: JsObject): Future[(StatusCode, JsValue)] =
-    Executor.execute(UserSchema, query, UserStore(), variables = variables, operationName = operationName)
+  def parseQuery(query: String): Try[Document] = QueryParser.parse(query)
+
+  def executeQuery(query: Document,
+                   operationName: Option[String],
+                   variables: JsObject): Future[(StatusCode, JsValue)] =
+    Executor
+      .execute(UserSchema, query, UserStore(), variables = variables, operationName = operationName)
       .map( OK -> _ )
       .recover {
         case error: QueryAnalysisError => BadRequest -> error.resolveError
