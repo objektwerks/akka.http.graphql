@@ -14,6 +14,8 @@ object UserRouter {
 }
 
 class UserRouter(implicit executor: ExecutionContextExecutor) extends Directives {
+  import UserSchema._
+
   val index = path("") {
     getFromResource("user/graphql.html")
   }
@@ -23,7 +25,7 @@ class UserRouter(implicit executor: ExecutionContextExecutor) extends Directives
       entity(as[JsValue]) { queryJsValue =>
         val (query, operationName, variables) = GraphQL.parseQuery(queryJsValue)
         GraphQL.parseQuery(query) match {
-          case Success(document) => complete( GraphQL.executeQuery(document, operationName, variables) )
+          case Success(document) => complete( GraphQL.executeQuery(UserSchema, document, operationName, variables) )
           case Failure(error) => complete( BadRequest, JsObject("error" -> JsString( error.getMessage ) ) )
         }
       }

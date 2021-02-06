@@ -11,7 +11,9 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.language.postfixOps
 
-class UserSchemaTest extends AnyFunSuite with Matchers with UserSchema {
+class UserSchemaTest extends AnyFunSuite with Matchers {
+  import UserSchema._
+
   test("list") {
     val result = Executor.execute(UserSchema, UserQueries.listQuery, UserStore())
     val json = Await.result(result, 1 second).asJsObject

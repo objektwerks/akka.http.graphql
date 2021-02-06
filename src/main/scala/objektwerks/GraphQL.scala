@@ -7,13 +7,14 @@ import sangria.ast.Document
 import sangria.execution.{ErrorWithResolver, Executor, QueryAnalysisError}
 import sangria.marshalling.sprayJson.{SprayJsonInputUnmarshallerJObject, SprayJsonResultMarshaller}
 import sangria.parser.QueryParser
+import sangria.schema.Schema
 
 import spray.json.{JsObject, JsString, JsValue}
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.util.Try
 
-object GraphQL extends UserSchema {
+object GraphQL {
   def parseQuery(queryJsValue: JsValue): (String, Option[String], JsObject) = {
     val JsObject(fields) = queryJsValue
     val JsString(query) = fields("query")
@@ -29,11 +30,12 @@ object GraphQL extends UserSchema {
 
   def parseQuery(query: String): Try[Document] = QueryParser.parse(query)
 
-  def executeQuery(query: Document,
+  def executeQuery(userSchema: Schema[UserStore, Unit],
+                   query: Document,
                    operationName: Option[String],
                    variables: JsObject)(implicit executor: ExecutionContextExecutor): Future[(StatusCode, JsValue)] =
     Executor
-      .execute(UserSchema, query, UserStore(), variables = variables, operationName = operationName)
+      .execute(userSchema, query, UserStore(), variables = variables, operationName = operationName)
       .map( OK -> _ )
       .recover {
         case error: QueryAnalysisError => BadRequest -> error.resolveError
