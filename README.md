@@ -2,6 +2,10 @@ Akka Http GraphQL
 -----------------
 >App using Akka-Http, GraphQL and Sangria.
 
+Todo
+----
+1. Convert UserStore to use Quill and H2.
+
 Test
 ----
 1. sbt clean test
