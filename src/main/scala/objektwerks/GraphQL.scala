@@ -31,11 +31,12 @@ object GraphQL {
   def parseQuery(query: String): Try[Document] = QueryParser.parse(query)
 
   def executeQuery(userSchema: Schema[UserStore, Unit],
+                   userStore: UserStore,
                    query: Document,
                    operationName: Option[String],
                    variables: JsObject)(implicit executor: ExecutionContextExecutor): Future[(StatusCode, JsValue)] =
     Executor
-      .execute(userSchema, query, UserStore(), variables = variables, operationName = operationName)
+      .execute(userSchema, query, userStore, variables = variables, operationName = operationName)
       .map( OK -> _ )
       .recover {
         case error: QueryAnalysisError => BadRequest -> error.resolveError

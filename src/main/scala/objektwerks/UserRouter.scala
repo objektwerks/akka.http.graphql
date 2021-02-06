@@ -10,10 +10,10 @@ import scala.concurrent.ExecutionContextExecutor
 import scala.util.{Failure, Success}
 
 object UserRouter {
-  def apply()(implicit executor: ExecutionContextExecutor): UserRouter = new UserRouter()
+  def apply(userStore: UserStore)(implicit executor: ExecutionContextExecutor): UserRouter = new UserRouter(userStore)
 }
 
-class UserRouter(implicit executor: ExecutionContextExecutor) extends Directives {
+class UserRouter(userStore: UserStore)(implicit executor: ExecutionContextExecutor) extends Directives {
   import UserSchema._
 
   val index = path("") {
@@ -25,7 +25,7 @@ class UserRouter(implicit executor: ExecutionContextExecutor) extends Directives
       entity(as[JsValue]) { queryJsValue =>
         val (query, operationName, variables) = GraphQL.parseQuery(queryJsValue)
         GraphQL.parseQuery(query) match {
-          case Success(document) => complete( GraphQL.executeQuery(UserSchema, document, operationName, variables) )
+          case Success(document) => complete( GraphQL.executeQuery(UserSchema, userStore, document, operationName, variables) )
           case Failure(error) => complete( BadRequest, JsObject("error" -> JsString( error.getMessage ) ) )
         }
       }
