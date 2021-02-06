@@ -8,13 +8,13 @@ trait Identifiable extends Product with Serializable {
 }
 
 object UserSchema {
-  implicit val IdentifiableType = InterfaceType(
+  val IdentifiableType = InterfaceType(
     "Identifiable",
     "Entity with id field.",
     fields[Unit, Identifiable]( Field("id", IntType, resolve = _.value.id) )
   )
 
-  implicit val UserType = deriveObjectType[Unit, User]( Interfaces( IdentifiableType ) )
+  val UserType = deriveObjectType[Unit, User]( Interfaces( IdentifiableType ) )
 
   val Id = Argument("id", IntType)
 
@@ -25,10 +25,9 @@ object UserSchema {
       arguments = Id :: Nil,
       resolve = context => context.ctx.find(context arg Id)
     ),
-
     Field("list",
       ListType(UserType),
-      description = Some("Returns ist of users."),
+      description = Some("Returns list of users."),
       resolve = context => context.ctx.list)
     )
   )
