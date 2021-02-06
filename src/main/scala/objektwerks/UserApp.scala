@@ -19,8 +19,9 @@ object UserApp {
 
     implicit val system = ActorSystem.create(name, conf)
     implicit val executor = system.dispatcher
-    val routes = UserRouter( UserSchema(), UserStore() ).routes
 
+    val router = UserRouter( UserSchema(), UserStore() )
+    val routes = router.routes
     val server = Http()
       .newServerAt(host, port)
       .bindFlow(routes)
