@@ -41,10 +41,10 @@ class UserAppTest extends AnyWordSpec with Matchers with ScalatestRouteTest with
 
   "list" should {
     "list users" in {
-      Get("/graphql", UserQueries.listQueryAsJson) ~> routes ~> check {
+      Get("/graphql", UserQueries.listQueryAsJsValue) ~> routes ~> check {
         status shouldBe StatusCodes.OK
       }
-      Post("/graphql", UserQueries.listQueryAsJson) ~> routes ~> check {
+      Post("/graphql", UserQueries.listQueryAsJsValue) ~> routes ~> check {
         status shouldBe StatusCodes.OK
       }
     }
@@ -52,10 +52,10 @@ class UserAppTest extends AnyWordSpec with Matchers with ScalatestRouteTest with
 
   "find" should {
     "find a user" in {
-      Get("/graphql", UserQueries.findQueryAsJson) ~> routes ~> check {
+      Get("/graphql", UserQueries.findQueryAsJsValue) ~> routes ~> check {
         status shouldBe StatusCodes.OK
       }
-      Post("/graphql", UserQueries.findQueryAsJson) ~> routes ~> check {
+      Post("/graphql", UserQueries.findQueryAsJsValue) ~> routes ~> check {
         status shouldBe StatusCodes.OK
       }
     }

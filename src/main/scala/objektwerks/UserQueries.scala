@@ -24,14 +24,14 @@ object UserQueries {
       }
     """
 
-  val listQueryAsJson =
+  val listQueryAsJsValue =
     """
       {
         "query": "{ list { id name } }"
       }
     """.parseJson
 
-  val findQueryAsJson =
+  val findQueryAsJsValue =
     """
       {
         "query": "{ find(id: 1) { name } }"
