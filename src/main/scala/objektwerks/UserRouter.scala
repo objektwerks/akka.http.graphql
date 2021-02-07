@@ -17,7 +17,7 @@ object UserRouter {
 class UserRouter(userSchema: UserSchema, userStore: UserStore)
                 (implicit executor: ExecutionContextExecutor) extends Directives {
   val index = path("") {
-    getFromResource("user/graphql.html")
+    getFromResource("public/graphql.html")
   }
 
   val api = path("graphql") {

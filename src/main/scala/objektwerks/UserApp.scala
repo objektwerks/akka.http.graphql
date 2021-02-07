@@ -12,7 +12,7 @@ import scala.io.StdIn
 object UserApp {
   def main(args: Array[String]): Unit = {
     val logger = LoggerFactory.getLogger(getClass)
-    val conf = ConfigFactory.load("user.app.conf")
+    val conf = ConfigFactory.load("app.conf")
     val name = conf.getString("app.name")
     val host = conf.getString("app.host")
     val port = conf.getInt("app.port")
