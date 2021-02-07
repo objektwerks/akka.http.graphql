@@ -1,13 +1,20 @@
 package objektwerks
 
+import com.typesafe.config.Config
+import io.getquill.{H2JdbcContext, Ord, SnakeCase}
+
 object UserStore {
-  def apply(): UserStore = new UserStore()
+  def apply(conf: Config): UserStore = new UserStore(conf)
 }
 
-class UserStore {
-  private val users = List( User(1, "Fred Flintstone"), User(2, "Barney Rebel") )
+class UserStore(conf: Config) {
+  implicit val ctx = new H2JdbcContext(SnakeCase, conf.getConfig("quill.ctx"))
+  import ctx._
 
-  def list: List[User] = users
+  run( query[User].insert( lift( User(id = 1, name = "Fred Flintstone") ) ) )
+  run( query[User].insert( lift( User(id = 2, name = "Barney Rebel") ) ) )
 
-  def find(id: Int): Option[User] = users.find( user => user.id == id )
+  def list: List[User] = run( query[User].sortBy(_.name)(Ord.desc) )
+
+  def find(id: Int): Option[User] = run( query[User].filter(_.id == lift(id) ) ).headOption
 }
