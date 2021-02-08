@@ -10,6 +10,8 @@ import org.scalatest.BeforeAndAfterAll
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
+import spray.json.JsValue
+
 class UserAppTest extends AnyWordSpec with Matchers with ScalatestRouteTest with BeforeAndAfterAll {
   import TestConf._
 
@@ -37,22 +39,28 @@ class UserAppTest extends AnyWordSpec with Matchers with ScalatestRouteTest with
 
   "list" should {
     "list users" in {
+      val response = """{"data":{"list":[{"id":1,"name":"Fred Flintstone"},{"id":2,"name":"Barney Rebel"}]}}"""
       Get("/graphql", UserQueries.listQueryAsJsValue) ~> routes ~> check {
         status shouldBe StatusCodes.OK
+        responseAs[JsValue].compactPrint shouldBe response
       }
       Post("/graphql", UserQueries.listQueryAsJsValue) ~> routes ~> check {
         status shouldBe StatusCodes.OK
+        responseAs[JsValue].compactPrint shouldBe response
       }
     }
   }
 
   "find" should {
     "find a user" in {
+      val response = """{"data":{"find":{"name":"Fred Flintstone"}}}"""
       Get("/graphql", UserQueries.findQueryAsJsValue) ~> routes ~> check {
         status shouldBe StatusCodes.OK
+        responseAs[JsValue].compactPrint shouldBe response
       }
       Post("/graphql", UserQueries.findQueryAsJsValue) ~> routes ~> check {
         status shouldBe StatusCodes.OK
+        responseAs[JsValue].compactPrint shouldBe response
       }
     }
   }
