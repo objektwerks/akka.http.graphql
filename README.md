@@ -12,5 +12,5 @@ Run
 2. view graphql client at: http://localhost:7777/
 3. within graphql client:
     * target: http://localhost:7777/graphql
-    * query: { list { id name } }
-    * query: { find(id: 1) { name } }
+    * query: { list { id name } }  response: {"data":{"list":[{"id":1,"name":"Fred Flintstone"},{"id":2,"name":"Barney Rebel"}]}}
+    * query: { find(id: 1) { name } }  response: {"data":{"find":{"name":"Fred Flintstone"}}}
