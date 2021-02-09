@@ -64,4 +64,12 @@ class UserAppTest extends AnyWordSpec with Matchers with ScalatestRouteTest with
       }
     }
   }
+
+  "query" should {
+    "return error" in {
+      Post("/graphql", UserQueries.emptyQueryAsJsValue) ~> routes ~> check {
+        assert( status == StatusCodes.BadRequest || status == StatusCodes.InternalServerError )
+      }
+    }
+  }
 }

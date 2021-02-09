@@ -38,4 +38,6 @@ object UserQueries {
         "query": "{ find(id: 1) { id name } }"
       }
     """.parseJson
+
+  val emptyQueryAsJsValue = new JsString("")
 }
