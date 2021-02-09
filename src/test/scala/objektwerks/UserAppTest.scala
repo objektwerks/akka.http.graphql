@@ -29,47 +29,41 @@ class UserAppTest extends AnyWordSpec with Matchers with ScalatestRouteTest with
       .onComplete(_ => system.terminate())
   }
 
-  "app" should {
-    "load graphql" in {
-      Get("/") ~> routes ~> check {
-        status shouldBe StatusCodes.OK
-      }
+  "load" in {
+    Get("/") ~> routes ~> check {
+      status shouldBe StatusCodes.OK
     }
   }
 
-  "list" should {
-    "list users" in {
-      val response = """{"data":{"list":[{"id":1,"name":"Fred Flintstone"},{"id":2,"name":"Barney Rebel"}]}}"""
-      val validateResponse = (json: String) => {
-        json shouldBe response
-        jsonToUsers( json ) shouldBe Seq(User(1, "Fred Flintstone"), User(2, "Barney Rebel"))
-      }
-      Get("/graphql", UserQueries.listQueryAsJsValue) ~> routes ~> check {
-        status shouldBe StatusCodes.OK
-        validateResponse( responseAs[JsValue].compactPrint )
-      }
-      Post("/graphql", UserQueries.listQueryAsJsValue) ~> routes ~> check {
-        status shouldBe StatusCodes.OK
-        validateResponse( responseAs[JsValue].compactPrint )
-      }
+  "list" in {
+    val response = """{"data":{"list":[{"id":1,"name":"Fred Flintstone"},{"id":2,"name":"Barney Rebel"}]}}"""
+    val validateResponse = (json: String) => {
+      json shouldBe response
+      jsonToUsers( json ) shouldBe Seq(User(1, "Fred Flintstone"), User(2, "Barney Rebel"))
+    }
+    Get("/graphql", UserQueries.listQueryAsJsValue) ~> routes ~> check {
+      status shouldBe StatusCodes.OK
+      validateResponse( responseAs[JsValue].compactPrint )
+    }
+    Post("/graphql", UserQueries.listQueryAsJsValue) ~> routes ~> check {
+      status shouldBe StatusCodes.OK
+      validateResponse( responseAs[JsValue].compactPrint )
     }
   }
 
-  "find" should {
-    "find a user" in {
-      val response = """{"data":{"find":{"id":1,"name":"Fred Flintstone"}}}"""
-      val validateResponse = (json: String) => {
-        json shouldBe response
-        jsonToUser( json ) shouldBe User(1, "Fred Flintstone")
-      }
-      Get("/graphql", UserQueries.findQueryAsJsValue) ~> routes ~> check {
-        status shouldBe StatusCodes.OK
-        validateResponse( responseAs[JsValue].compactPrint )
-      }
-      Post("/graphql", UserQueries.findQueryAsJsValue) ~> routes ~> check {
-        status shouldBe StatusCodes.OK
-        validateResponse( responseAs[JsValue].compactPrint )
-      }
+  "find" in {
+    val response = """{"data":{"find":{"id":1,"name":"Fred Flintstone"}}}"""
+    val validateResponse = (json: String) => {
+      json shouldBe response
+      jsonToUser( json ) shouldBe User(1, "Fred Flintstone")
+    }
+    Get("/graphql", UserQueries.findQueryAsJsValue) ~> routes ~> check {
+      status shouldBe StatusCodes.OK
+      validateResponse( responseAs[JsValue].compactPrint )
+    }
+    Post("/graphql", UserQueries.findQueryAsJsValue) ~> routes ~> check {
+      status shouldBe StatusCodes.OK
+      validateResponse( responseAs[JsValue].compactPrint )
     }
   }
 
