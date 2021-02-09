@@ -19,6 +19,7 @@ object UserQueries {
     graphql"""
       query Find {
         find(id: 1) {
+          id
           name
         }
       }
@@ -34,7 +35,7 @@ object UserQueries {
   val findQueryAsJsValue =
     """
       {
-        "query": "{ find(id: 1) { name } }"
+        "query": "{ find(id: 1) { id name } }"
       }
     """.parseJson
 }

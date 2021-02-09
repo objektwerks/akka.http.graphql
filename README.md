@@ -14,5 +14,5 @@ Run
    * target: http://localhost:7777/graphql
    * query: { list { id name } }
    * response: {"data":{"list":[{"id":1,"name":"Fred Flintstone"},{"id":2,"name":"Barney Rebel"}]}}
-   * query: { find(id: 1) { name } }
-   * response: {"data":{"find":{"name":"Fred Flintstone"}}}
+   * query: { find(id: 1) { id name } }
+   * response: {"data":{"find":{"id":1,"name":"Fred Flintstone"}}}

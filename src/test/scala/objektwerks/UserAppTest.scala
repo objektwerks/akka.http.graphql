@@ -53,7 +53,7 @@ class UserAppTest extends AnyWordSpec with Matchers with ScalatestRouteTest with
 
   "find" should {
     "find a user" in {
-      val response = """{"data":{"find":{"name":"Fred Flintstone"}}}"""
+      val response = """{"data":{"find":{"id":1,"name":"Fred Flintstone"}}}"""
       Get("/graphql", UserQueries.findQueryAsJsValue) ~> routes ~> check {
         status shouldBe StatusCodes.OK
         responseAs[JsValue].compactPrint shouldBe response
