@@ -13,18 +13,23 @@ import scala.language.postfixOps
 
 class UserSchemaTest extends AnyFunSuite with Matchers {
   import TestConf._
+  import UserJsonSupport._
 
   test("list") {
     val result = Executor.execute(userSchema, UserQueries.listQuery, userStore)
     val json = Await.result(result, 1 second).asJsObject
+    val users = jsonToUsers( json.compactPrint )
     println( json )
-    json.fields.nonEmpty shouldBe true
+    println( users )
+    users shouldBe Seq(User(1, "Fred Flintstone"), User(2, "Barney Rebel"))
   }
 
   test("find") {
     val query = Executor.execute(userSchema, UserQueries.findQuery, userStore)
     val json = Await.result(query, 1 second).asJsObject
+    val user = jsonToUser( json.compactPrint )
     println( json )
-    json.fields.nonEmpty shouldBe true
+    println( user )
+    user shouldBe User(1, "Fred Flintstone")
   }
 }
