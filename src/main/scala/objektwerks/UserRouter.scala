@@ -26,10 +26,11 @@ class UserRouter(userSchema: UserSchema, userStore: UserStore)
   val api = path("graphql") {
     (get | post) {
       entity(as[JsValue]) { queryJsValue =>
-        GraphQL.parseQueryJsValue(queryJsValue) match {
+        import GraphQL._
+        parseQueryJsValue(queryJsValue) match {
           case Success((query, operationName, variables)) =>
-            GraphQL.parseQuery(query) match {
-              case Success(document) => complete(GraphQL.executeQuery(querySchema, userStore, document, operationName, variables))
+            parseQuery(query) match {
+              case Success(document) => complete(executeQuery(querySchema, userStore, document, operationName, variables))
               case Failure(error) => toBadRequest(error)
             }
           case Failure(error) => toBadRequest(error)
