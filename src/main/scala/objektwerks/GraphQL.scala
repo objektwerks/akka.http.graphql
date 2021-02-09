@@ -15,7 +15,7 @@ import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.util.Try
 
 object GraphQL {
-  def parseQuery(queryJsValue: JsValue): Try[(String, Option[String], JsObject)] = Try {
+  def parseQueryJsValue(queryJsValue: JsValue): Try[(String, Option[String], JsObject)] = Try {
     val JsObject(fields) = queryJsValue
     val JsString(query) = fields("query")
     val operationName = fields.get("operationName") collect {
