@@ -9,27 +9,16 @@ import sangria.ast.Document
 import sangria.execution.ExecutionScheme.Default.Result
 import sangria.execution.Executor
 import sangria.marshalling.sprayJson.{SprayJsonInputUnmarshallerJObject, SprayJsonResultMarshaller}
-import sangria.parser.QueryParser
 import sangria.schema.Schema
 
 import spray.json.{JsObject, JsString, JsValue}
 
 import scala.concurrent.ExecutionContextExecutor
-import scala.util.{Failure, Success, Try}
+import scala.util.{Failure, Success}
 
 object UserRouter {
   def apply(userSchema: Schema[UserStore, Unit], userStore: UserStore)
            (implicit executor: ExecutionContextExecutor): UserRouter = new UserRouter(userSchema, userStore)
-
-  def parseQueryJsValue(queryJsValue: JsValue): Try[(String, Option[String], JsObject)] = Try {
-    val JsObject(fields) = queryJsValue
-    val JsString(query) = fields("query")
-    val operationName = fields.get("operationName") collect { case JsString(op) => op }
-    val variables = fields.getOrElse("variables", JsObject.empty).asJsObject
-    (query, operationName, variables)
-  }
-
-  def parseQuery(query: String): Try[Document] = QueryParser.parse(query)
 
   def executeQuery(userSchema: Schema[UserStore, Unit],
                    userStore: UserStore,
@@ -41,6 +30,7 @@ object UserRouter {
 
 class UserRouter(userSchema: Schema[UserStore, Unit], userStore: UserStore)
                 (implicit executor: ExecutionContextExecutor) extends Directives {
+  import GraphQL._
   import UserRouter._
 
   val index = path("") {
