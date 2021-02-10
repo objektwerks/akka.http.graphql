@@ -16,7 +16,7 @@ class UserSchemaTest extends AnyFunSuite with Matchers {
   import UserJsonSupport._
 
   test("list") {
-    val result = Executor.execute(userSchema, UserQueries.listQuery, userStore)
+    val result = Executor.execute(userSchema, listQuery, userStore)
     val json = Await.result(result, 1 second).asJsObject
     val users = jsonToUsers( json.compactPrint )
     println( json )
@@ -25,7 +25,7 @@ class UserSchemaTest extends AnyFunSuite with Matchers {
   }
 
   test("find") {
-    val query = Executor.execute(userSchema, UserQueries.findQuery, userStore)
+    val query = Executor.execute(userSchema, findQuery, userStore)
     val json = Await.result(query, 1 second).asJsObject
     val user = jsonToUser( json.compactPrint )
     println( json )

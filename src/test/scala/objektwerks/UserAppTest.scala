@@ -41,11 +41,11 @@ class UserAppTest extends AnyWordSpec with Matchers with ScalatestRouteTest with
       json shouldBe response
       jsonToUsers( json ) shouldBe Seq(User(1, "Fred Flintstone"), User(2, "Barney Rebel"))
     }
-    Get("/graphql", UserQueries.listQueryAsJsValue) ~> routes ~> check {
+    Get("/graphql", listQueryAsJsValue) ~> routes ~> check {
       status shouldBe StatusCodes.OK
       validateResponse( responseAs[JsValue].compactPrint )
     }
-    Post("/graphql", UserQueries.listQueryAsJsValue) ~> routes ~> check {
+    Post("/graphql", listQueryAsJsValue) ~> routes ~> check {
       status shouldBe StatusCodes.OK
       validateResponse( responseAs[JsValue].compactPrint )
     }
@@ -57,21 +57,21 @@ class UserAppTest extends AnyWordSpec with Matchers with ScalatestRouteTest with
       json shouldBe response
       jsonToUser( json ) shouldBe User(1, "Fred Flintstone")
     }
-    Get("/graphql", UserQueries.findQueryAsJsValue) ~> routes ~> check {
+    Get("/graphql", findQueryAsJsValue) ~> routes ~> check {
       status shouldBe StatusCodes.OK
       validateResponse( responseAs[JsValue].compactPrint )
     }
-    Post("/graphql", UserQueries.findQueryAsJsValue) ~> routes ~> check {
+    Post("/graphql", findQueryAsJsValue) ~> routes ~> check {
       status shouldBe StatusCodes.OK
       validateResponse( responseAs[JsValue].compactPrint )
     }
   }
 
   "error" in {
-    Get("/graphql", UserQueries.emptyQueryAsJsValue) ~> routes ~> check {
+    Get("/graphql", emptyQueryAsJsValue) ~> routes ~> check {
       status shouldBe StatusCodes.BadRequest
     }
-    Post("/graphql", UserQueries.emptyQueryAsJsValue) ~> routes ~> check {
+    Post("/graphql", emptyQueryAsJsValue) ~> routes ~> check {
       status shouldBe StatusCodes.BadRequest
     }
   }
