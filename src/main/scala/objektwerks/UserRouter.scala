@@ -14,13 +14,11 @@ import scala.concurrent.ExecutionContextExecutor
 import scala.util.{Failure, Success}
 
 object UserRouter {
-  def apply(userSchema: Schema[UserStore, Unit],
-            userStore: UserStore)
+  def apply(userSchema: Schema[UserStore, Unit], userStore: UserStore)
            (implicit executor: ExecutionContextExecutor): UserRouter = new UserRouter(userSchema, userStore)
 }
 
-class UserRouter(userSchema: Schema[UserStore, Unit],
-                 userStore: UserStore)
+class UserRouter(userSchema: Schema[UserStore, Unit], userStore: UserStore)
                 (implicit executor: ExecutionContextExecutor) extends Directives {
   import GraphQL._
 
