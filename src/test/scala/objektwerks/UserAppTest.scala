@@ -17,7 +17,7 @@ class UserAppTest extends AnyWordSpec with Matchers with ScalatestRouteTest with
 
   val actorRefFactory = ActorSystem.create(name, conf)
 
-  val router = UserRouter( UserSchema(), userStore )
+  val router = UserRouter( userSchema, userStore )
   val routes = router.routes
   val server = Http()
     .newServerAt(host, port)

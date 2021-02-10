@@ -7,20 +7,20 @@ trait Identifiable extends Product with Serializable {
   def id: Int
 }
 
-object UserSchema {
-  def apply(): UserSchema = new UserSchema
-}
-
-class UserSchema {
+object Identifiable {
   val IdentifiableType = InterfaceType(
     "Identifiable",
     "Entity with id field.",
     fields[Unit, Identifiable]( Field("id", IntType, resolve = _.value.id) )
   )
 
-  val UserType = deriveObjectType[Unit, User]( Interfaces( IdentifiableType ) )
-
   val Id = Argument("id", IntType)
+}
+
+object UserSchema {
+  import Identifiable._
+
+  val UserType = deriveObjectType[Unit, User]( Interfaces( IdentifiableType ) )
 
   val UserQueryType = ObjectType("Query", fields[UserStore, Unit](
     Field("find",
@@ -36,5 +36,5 @@ class UserSchema {
     )
   )
 
-  val UserSchema = Schema(UserQueryType)
+  val schema = Schema(UserQueryType)
 }

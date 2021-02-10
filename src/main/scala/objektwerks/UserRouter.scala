@@ -18,7 +18,7 @@ import scala.concurrent.ExecutionContextExecutor
 import scala.util.{Failure, Success, Try}
 
 object UserRouter {
-  def apply(userSchema: UserSchema, userStore: UserStore)
+  def apply(userSchema: Schema[UserStore, Unit], userStore: UserStore)
            (implicit executor: ExecutionContextExecutor): UserRouter = new UserRouter(userSchema, userStore)
 
   def parseQueryJsValue(queryJsValue: JsValue): Try[(String, Option[String], JsObject)] = Try {
@@ -39,11 +39,9 @@ object UserRouter {
     Executor.execute(userSchema, query, userStore, variables = variables, operationName = operationName)
 }
 
-class UserRouter(userSchema: UserSchema, userStore: UserStore)
+class UserRouter(userSchema: Schema[UserStore, Unit], userStore: UserStore)
                 (implicit executor: ExecutionContextExecutor) extends Directives {
   import UserRouter._
-
-  val querySchema = userSchema.UserSchema
 
   val index = path("") {
     getFromResource("public/graphql.html")
@@ -55,7 +53,7 @@ class UserRouter(userSchema: UserSchema, userStore: UserStore)
         val tryResult = for {
           (query, operationName, variables) <- parseQueryJsValue(queryJsValue)
           document <- parseQuery(query)
-        } yield executeQuery(querySchema, userStore, document, operationName, variables)
+        } yield executeQuery(userSchema, userStore, document, operationName, variables)
         tryResult match {
           case Success(result) => complete(result)
           case Failure(error) => complete(BadRequest, JsObject("error" -> JsString(error.getMessage)))
