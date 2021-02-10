@@ -1,6 +1,7 @@
 package objektwerks
 
 import com.typesafe.config.Config
+
 import io.getquill.{H2JdbcContext, Ord, SnakeCase}
 
 object UserStore {

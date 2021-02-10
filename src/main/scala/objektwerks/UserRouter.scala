@@ -4,12 +4,14 @@ import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.scaladsl.model.StatusCode
 import akka.http.scaladsl.model.StatusCodes.BadRequest
 import akka.http.scaladsl.server.Directives
+
 import sangria.ast.Document
 import sangria.execution.ExecutionScheme.Default.Result
 import sangria.execution.Executor
 import sangria.marshalling.sprayJson.{SprayJsonInputUnmarshallerJObject, SprayJsonResultMarshaller}
 import sangria.parser.QueryParser
 import sangria.schema.Schema
+
 import spray.json.{JsObject, JsString, JsValue}
 
 import scala.concurrent.ExecutionContextExecutor
