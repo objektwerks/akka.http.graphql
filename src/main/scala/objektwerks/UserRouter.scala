@@ -29,12 +29,12 @@ class UserRouter(userSchema: Schema[UserStore, Unit], userStore: UserStore)
   val api = path("graphql") {
     (get | post) {
       entity(as[JsValue]) { queryJsValue =>
-        val tryResult = for {
+        val result = for {
           (query, operationName, variables) <- parseQueryJsValue(queryJsValue)
           document <- parseQuery(query)
         } yield Executor.execute(userSchema, document, userStore, variables = variables, operationName = operationName)
-        tryResult match {
-          case Success(result) => complete(result)
+        result match {
+          case Success(response) => complete(response)
           case Failure(error) => complete(BadRequest, JsObject("error" -> JsString(error.getMessage)))
         }
       }
