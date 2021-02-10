@@ -1,7 +1,6 @@
 package objektwerks
 
 import sangria.macros._
-
 import spray.json._
 
 object UserQueries {
