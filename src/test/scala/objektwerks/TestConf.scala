@@ -52,4 +52,11 @@ object TestConf {
     """.parseJson
 
   val emptyQueryAsJsValue = new JsString("")
+
+  val invalidQueryAsJsValue =
+    """
+      {
+        "query": "{ get(id: 1) { id name } }"
+      }
+    """.parseJson
 }
