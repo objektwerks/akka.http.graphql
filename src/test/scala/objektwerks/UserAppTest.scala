@@ -63,7 +63,7 @@ class UserAppTest extends AnyWordSpec with Matchers with ScalatestRouteTest with
     }
   }
 
-  "error" in {
+  "parsing error" in {
     val validateResponse = (status: StatusCode, jsObject: JsObject) => {
       status shouldBe StatusCodes.BadRequest
       println(jsObject.compactPrint)
@@ -76,7 +76,7 @@ class UserAppTest extends AnyWordSpec with Matchers with ScalatestRouteTest with
     }
   }
 
-  "invalid" in {
+  "invalid query" in {
     val validateResponse = (status: StatusCode, jsObject: JsObject) => {
       assert( status == StatusCodes.BadRequest || status == StatusCodes.InternalServerError )
       println(jsObject.compactPrint)
