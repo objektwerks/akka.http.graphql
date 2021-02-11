@@ -4,10 +4,12 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{StatusCode, StatusCodes}
 import akka.http.scaladsl.testkit.ScalatestRouteTest
+
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import spray.json.{JsObject, JsValue}
+
+import spray.json._
 
 class UserAppTest extends AnyWordSpec with Matchers with ScalatestRouteTest with BeforeAndAfterAll {
   import TestConf._
@@ -64,28 +66,28 @@ class UserAppTest extends AnyWordSpec with Matchers with ScalatestRouteTest with
   }
 
   "parsing error" in {
-    val validateResponse = (status: StatusCode, jsObject: JsObject) => {
+    val validateResponse = (status: StatusCode, jsValue: JsValue) => {
       status shouldBe StatusCodes.BadRequest
-      println(jsObject.compactPrint)
+      println(jsValue.compactPrint)
     }
     Get("/graphql", emptyQueryAsJsValue) ~> routes ~> check {
-      validateResponse( status, responseAs[JsObject] )
+      validateResponse( status, responseAs[JsValue] )
     }
     Post("/graphql", emptyQueryAsJsValue) ~> routes ~> check {
-      validateResponse( status, responseAs[JsObject] )
+      validateResponse( status, responseAs[JsValue] )
     }
   }
 
   "invalid query" in {
-    val validateResponse = (status: StatusCode, jsObject: JsObject) => {
+    val validateResponse = (status: StatusCode, jsValue: JsValue) => {
       assert( status == StatusCodes.BadRequest || status == StatusCodes.InternalServerError )
-      println(jsObject.compactPrint)
+      println(jsValue.compactPrint)
     }
     Get("/graphql", invalidQueryAsJsValue) ~> routes ~> check {
-      validateResponse( status, responseAs[JsObject] )
+      validateResponse( status, responseAs[JsValue] )
     }
     Post("/graphql", invalidQueryAsJsValue) ~> routes ~> check {
-      validateResponse( status, responseAs[JsObject] )
+      validateResponse( status, responseAs[JsValue] )
     }
   }
 }
