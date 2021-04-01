@@ -3,8 +3,8 @@ organization := "objektwerks"
 version := "0.1-SNAPSHOT"
 scalaVersion := "2.13.5"
 libraryDependencies ++= {
-  val akkaVersion = "2.6.12"
-  val akkkHttpVersion = "10.2.3"
+  val akkaVersion = "2.6.13"
+  val akkkHttpVersion = "10.2.4"
   val quillVersion = "3.6.1"
   Seq(
     "com.typesafe.akka" %% "akka-actor" % akkaVersion,
