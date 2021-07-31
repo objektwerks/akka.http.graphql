@@ -18,8 +18,8 @@ libraryDependencies ++= {
     "io.getquill" %% "quill-sql" % quillVersion,
     "io.getquill" %% "quill-jdbc" % quillVersion,
     "com.h2database" % "h2" % "1.4.200",
-    "com.typesafe" % "config" % "1.4.0",
-    "ch.qos.logback" % "logback-classic" % "1.2.3",
+    "com.typesafe" % "config" % "1.4.1",
+    "ch.qos.logback" % "logback-classic" % "1.2.5",
     "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test,
     "com.typesafe.akka" %% "akka-http-testkit" % akkkHttpVersion % Test,
     "org.scalatest" %% "scalatest" % "3.2.9" % Test
