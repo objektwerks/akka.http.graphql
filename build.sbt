@@ -13,7 +13,7 @@ libraryDependencies ++= {
     "com.typesafe.akka" %% "akka-stream" % akkaVersion,
     "com.typesafe.akka" %% "akka-http-spray-json" % akkkHttpVersion,
     "net.virtual-void" %%  "json-lenses" % "0.6.2",
-    "org.sangria-graphql" %% "sangria" % "3.5.3",
+    "org.sangria-graphql" %% "sangria" % "4.0.2",
     "org.sangria-graphql" %% "sangria-spray-json" % "1.0.3",
     "io.getquill" %% "quill-sql" % quillVersion,
     "io.getquill" %% "quill-jdbc" % quillVersion,
