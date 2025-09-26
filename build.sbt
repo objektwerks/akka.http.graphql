@@ -17,7 +17,7 @@ libraryDependencies ++= {
     "org.sangria-graphql" %% "sangria-spray-json" % "1.0.3",
     "io.getquill" %% "quill-sql" % quillVersion,
     "io.getquill" %% "quill-jdbc" % quillVersion,
-    "com.h2database" % "h2" % "2.3.232",
+    "com.h2database" % "h2" % "2.4.240",
     "com.typesafe" % "config" % "1.4.3",
     "ch.qos.logback" % "logback-classic" % "1.5.18",
     "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test,
